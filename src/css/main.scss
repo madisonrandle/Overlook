@@ -1,0 +1,14 @@
+@import 'variables';
+@import 'mixins';
+@import 'reset';
+
+* {
+  box-sizing: border-box;
+  // color: ;
+  // font-family: 'Spartan', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100vh;
+}
