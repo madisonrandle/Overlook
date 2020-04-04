@@ -1,8 +1,10 @@
 import $ from 'jquery'
 
 class Hotel {
-  constructor() {
-
+  constructor(usersData, roomsData, bookingsData) {
+    this.users = usersData;
+    this.roomsData = roomsData;
+    this.bookingsData = bookingsData;
   }
 }
 
