@@ -2,11 +2,11 @@ import $ from 'jquery';
 import moment from 'moment';
 
 class Hotel {
-  constructor(usersData, roomsData, bookingsData, todaysDate) {
+  constructor(users, rooms, bookings, todaysDate) {
     this.todaysDate = moment().format('YYYY-MM-DD');
-    this.users = usersData;
-    this.roomsData = roomsData.rooms;
-    this.bookingsData = bookingsData.bookings;
+    this.users = users;
+    this.rooms = rooms.rooms;
+    this.bookings = bookings.bookings;
   }
 
 
