@@ -1,9 +1,24 @@
 import $ from 'jquery';
+import Manager from './Manager';
+
+let manager;
 
 const domUpdates = {
-  loadPage: (data) => {
-    console.log(data);
+  loadLoginPage: (data) => {
+
+    // $('body').html(`
+    //
+    // `);
+  },
+
+  loadManagerPage: () => {
+    manager = new Manager(todaysDate);
+
   },
 }
+
+
+
+
 
 export default domUpdates;
