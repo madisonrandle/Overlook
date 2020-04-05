@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import './css/main.scss';
-import moment from 'moment';
 import domUpdates from './domUpdates';
 import Hotel from './Hotel';
 
@@ -25,6 +24,6 @@ const bookingsData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/b
 Promise.all([usersData, roomsData, bookingsData])
   .then(data => {
     let hotel = new Hotel(data[0], data[1], data[2]);
-    domUpdates.loadPage(hotel);
+    domUpdates.loadLoginPage(hotel);
   })
   .catch(error => console.log(`There was an error: ${error}`));
