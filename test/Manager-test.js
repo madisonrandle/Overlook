@@ -36,5 +36,13 @@ describe.only('Manager', () => {
     expect(manager.getAvailableRoomsToday().length).to.equal(12);
   });
 
+  it('should calculate the total revenue for today\'s date', () => {
+    expect(manager.getTotalRevenueToday()).to.be.a('number');
+  });
+
+  it('should calculate the percentage of rooms occupied for today\'s date', () => {
+    expect(manager.getPercentageOfRoomsOccupiedToday()).to.be.a('number');
+  });
+
 
 });
