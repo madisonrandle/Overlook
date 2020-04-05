@@ -33,7 +33,7 @@ describe.only('Manager', () => {
   });
 
   it('should return an array of available rooms for today\'s date', () => {
-    expect(manager.getAvailableRoomsToday()).to.be.a('array');
+    expect(manager.getAvailableRoomsToday().length).to.equal(12);
   });
 
 
