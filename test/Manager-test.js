@@ -21,7 +21,7 @@ describe.only('Manager', () => {
   });
 
   it('should know what today\'s date is', () => {
-    expect(manager.todaysDate).to.equal(moment().format('L'));
+    expect(manager.todaysDate).to.equal(moment().format('YYYY-MM-DD'));
   });
 
   it('should accept an array of all available rooms', () => {
@@ -30,6 +30,10 @@ describe.only('Manager', () => {
 
   it('should accept an array of all occupied rooms', () => {
     expect(manager.occupiedRooms).to.be.a('array');
+  });
+
+  it('should return an array of available rooms for today\'s date', () => {
+    expect(manager.getAvailableRoomsToday()).to.be.a('array');
   });
 
 
