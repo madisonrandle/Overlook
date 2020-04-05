@@ -26,7 +26,9 @@ class Manager extends Hotel {
         }
       })
     });
+    return this.availableRooms;
   };
+
 };
 
 export default Manager;
