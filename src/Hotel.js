@@ -1,11 +1,15 @@
-import $ from 'jquery'
+import $ from 'jquery';
+import moment from 'moment';
 
 class Hotel {
-  constructor(usersData, roomsData, bookingsData) {
-    this.users = usersData;
-    this.roomsData = roomsData;
-    this.bookingsData = bookingsData;
+  constructor(users, rooms, bookings, todaysDate) {
+    this.todaysDate = moment().format('YYYY-MM-DD');
+    this.users = users;
+    this.rooms = rooms.rooms;
+    this.bookings = bookings.bookings;
   }
+
+
 }
 
 export default Hotel;
