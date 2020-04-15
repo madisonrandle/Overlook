@@ -24,4 +24,4 @@ class ApiHandler {
   };
 }
 
-export default Api;
+export default ApiHandler;
