@@ -20,21 +20,15 @@ describe('Hotel', () => {
     expect(hotel).to.be.an.instanceof(Hotel);
   });
 
-  // it('should have today\'s date', () => {
-  //   expect(hotel.todaysDate).to.eql(moment().format('YYYY-MM-DD'));
-  // });
-  //
-  // it('should except an array of users', () => {
-  //   expect(hotel.users.length).to.eql(10);
-  // });
-  //
-  // it('should except an array of rooms', () => {
-  //   expect(hotel.rooms.length).to.eql(12);
-  // });
-  //
-  // it('should except an array of bookings', () => {
-  //   expect(hotel.rooms.length).to.eql(12);
-  // });
+  it('should except an array of users', () => {
+    expect(hotel.users.length).to.eql(10);
+  });
 
+  it('should except an array of rooms', () => {
+    expect(hotel.rooms.length).to.eql(12);
+  });
 
+  it('should except an array of bookings', () => {
+    expect(hotel.rooms.length).to.eql(12);
+  });
 });
