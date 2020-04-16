@@ -3,8 +3,8 @@ import domUpdates from './domUpdates';
 import moment from 'moment';
 
 class Hotel {
-  constructor(users, rooms, bookings, todaysDate) {
-    this.todaysDate = moment().format('YYYY-MM-DD');
+  constructor(users, rooms, bookings) {
+    // this.todaysDate = moment().format('YYYY-MM-DD');
     this.users = users.users;
     this.rooms = rooms.rooms;
     this.bookings = bookings.bookings;
@@ -19,7 +19,7 @@ class Hotel {
       domUpdates.customerAccessPage(foundUser);
     } else {
       $('#username-input').val() === 'manager' && $('#password-input').val() === 'overlook2020' ?
-        domUpdates.managerAccessPage() :
+        domUpdates.managerAccessPage(foundUser) :
         domUpdates.invalidLogin();
     }
   }

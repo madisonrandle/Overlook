@@ -1,9 +1,11 @@
 import $ from 'jquery';
 import Manager from './Manager';
+import Customer from './Customer';
 
+let hotelObj, user;
 const domUpdates = {
   loadLoginPage: (hotel) => {
-
+    hotelObj = hotel;
     $('body').html(`
       <section>
         <form id="login-form">
@@ -23,9 +25,13 @@ const domUpdates = {
       e.preventDefault(e);
       hotel.validateUser(e);
     });
+    console.log(hotelObj.users);
   },
 
-  managerAccessPage: () => {
+  managerAccessPage: (user) => {
+    user = new Manager(user);
+    console.log('user', user);
+
 
     $('body').html(`
       <section id="user-access-page">
@@ -52,8 +58,35 @@ const domUpdates = {
     `);
   },
 
-  customerAccessPage: () => {
+  customerAccessPage: (user) => {
 
+    user = new Customer(user);
+    console.log('user', user);
+    $('body').html(`
+      <section id="user-access-page">
+        <header id="header">
+
+        </header>
+        <main id="main">
+
+          <section id="occupied-rooms">
+
+
+          </section>
+
+          <section id="available-rooms">
+
+
+          </section>
+
+          <section id="revenue-today">
+
+
+          </section>
+
+        </main>
+      </section>
+    `);
   },
 
   invalidLogin: () => {
