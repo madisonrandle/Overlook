@@ -4,7 +4,6 @@
 
 * {
   box-sizing: border-box;
-  // color: ;
   // font-family: 'Spartan', sans-serif;
   scroll-behavior: smooth;
 }
@@ -67,7 +66,12 @@ h2 {
 }
 
 button:hover {
-  @include button-hover
+  @include button-hover;
+}
+
+#numAvailableRooms {
+  font-size: $manager-numbers;
+  padding: $page-padding;
 }
 
 
