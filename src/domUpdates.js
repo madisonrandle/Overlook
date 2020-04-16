@@ -66,8 +66,8 @@ const domUpdates = {
   },
 
   customerAccessPage: (user) => {
-    // user = new Customer(user);
-    // console.log('user', user);
+    user = new Customer(user);
+
 
     $('body').html(`
       <section id="user-access-page">
