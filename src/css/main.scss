@@ -33,7 +33,7 @@ body {
   border: 2px solid blue;
   display: grid;
   grid-template-areas:
-  "occupied available revenue";
+  "left middle right";
   grid-area: main;
   grid-gap: 1rem;
   padding: $page-padding;
@@ -41,24 +41,31 @@ body {
 
 #occupied-rooms,
 #available-rooms,
-#revenue-today {
+#revenue-today,
+#today-booking,
+#upcoming-booking,
+#past-booking {
+  @include scroll;
   height: 100%;
   padding: $page-padding;
 }
 
-#occupied-rooms {
+#occupied-rooms,
+#today-booking {
   border: 2px solid green;
-  grid-area: occupied;
+  grid-area: left;
 }
 
-#available-rooms {
+#available-rooms,
+#upcoming-booking {
   border: 2px solid purple;
-  grid-area: available;
+  grid-area: middle;
 }
 
-#revenue-today {
+#revenue-today,
+#past-booking {
   border: 2px solid pink;
-  grid-area: revenue;
+  grid-area: right;
 }
 
 h2 {
