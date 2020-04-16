@@ -22,7 +22,7 @@ describe('Manager', () => {
   });
 
   it('should accept an array of all available rooms', () => {
-    expect(manager.availableRooms).to.be.a('array');
+    expect(manager.availableRoomsToday).to.be.a('array');
   });
 
   it('should accept an array of all occupied rooms', () => {
