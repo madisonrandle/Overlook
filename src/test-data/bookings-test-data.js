@@ -86,5 +86,4 @@ const bookingsTestData = {
     },
   ]
 }
-
 export default bookingsTestData;

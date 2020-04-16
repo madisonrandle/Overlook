@@ -7,7 +7,7 @@ import bookingsData from '../src/test-data/bookings-test-data';
 const expect = chai.expect;
 
 let manager;
-describe.only('Manager', () => {
+describe('Manager', () => {
   beforeEach(() => {
     manager = new Manager(usersData, roomsData, bookingsData);
    });

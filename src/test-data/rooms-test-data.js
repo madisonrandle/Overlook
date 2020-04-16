@@ -98,5 +98,4 @@ const roomsTestData = {
     },
   ]
 }
-
 export default roomsTestData;

@@ -1,15 +1,28 @@
 import $ from 'jquery';
+import domUpdates from './domUpdates';
 import moment from 'moment';
 
 class Hotel {
   constructor(users, rooms, bookings, todaysDate) {
     this.todaysDate = moment().format('YYYY-MM-DD');
-    this.users = users;
+    this.users = users.users;
     this.rooms = rooms.rooms;
     this.bookings = bookings.bookings;
   }
 
+  validateUser(e) {
+    const foundUser = this.users.find(user => {
+      return $('#username-input').val() === `customer${user.id}` && $('#password-input').val() === 'overlook2020';
+    });
 
+    if (foundUser) {
+      domUpdates.customerAccessPage(foundUser);
+    } else {
+      $('#username-input').val() === 'manager' && $('#password-input').val() === 'overlook2020' ?
+        domUpdates.managerAccessPage() :
+        domUpdates.invalidLogin();
+    }
+  }
 }
 
 export default Hotel;

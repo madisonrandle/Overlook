@@ -1,9 +1,16 @@
-// EXAMPLE OF SASS MIXIN
-  // @mixin font($size) {
-  //   font-size: $size;
-  // }
+@mixin sub-header {
+  border-bottom: .1rem solid black;
+  font-size: 2rem;
+  padding: $page-padding;
+  text-align: center;
+}
 
-// EXAMPLE OF HOW THIS WOULD BE REFERENCED IN MAIN.SCSS
-  // @include font(1.5em);
+@mixin scroll {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
 
+@mixin button-hover {
+  cursor: pointer;
+}
 //

@@ -1,21 +1,20 @@
-
-// import './css/main.scss';
+import {fetchData} from './ApiHandler';
 import domUpdates from './domUpdates';
 import Hotel from './Hotel';
-import ApiHandler from './ApiHandler';
+import './css/main.scss';
 
 const fetchAllData = () => {
-  const apiHandler = new ApiHandler();
-  const usersData = apiHandler.fetchUsersData();
-  const roomsData = apiHandler.fetchRoomsData();
-  const bookingsData = apiHandler.fetchBookingsData();
+  const urlFragment = 'https://fe-apps.herokuapp.com/api/v1/overlook/1904';
+  const usersData = fetchData(`${urlFragment}/users/users`);
+  const roomsData = fetchData(`${urlFragment}/rooms/rooms`);
+  const bookingsData = fetchData(`${urlFragment}/bookings/bookings`);
 
   Promise.all([usersData, roomsData, bookingsData])
-  .then(data => {
-    const hotel = new Hotel(data[0], data[1], data[2]);
-    domUpdates.loadLoginPage(hotel);
-  })
-  .catch(error => console.log(`There was an error: ${error}`));
+    .then(data => {
+      const hotel = new Hotel(data[0], data[1], data[2]);
+      domUpdates.loadLoginPage(hotel);
+    })
+    .catch(error => console.log(`There was an error: ${error}`));
 };
 
 fetchAllData();

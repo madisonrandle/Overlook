@@ -42,5 +42,4 @@ const usersTestData = {
     },
   ]
 }
-
 export default usersTestData;

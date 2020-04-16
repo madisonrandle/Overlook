@@ -1,8 +1,9 @@
 import $ from 'jquery'
 
 class Customer {
-  constructor() {
-    
+  constructor(user) {
+    // this.id = user.id;
+    // this.name = user.name;
   }
 }
 export default Customer;

@@ -7,7 +7,6 @@ class Manager extends Hotel {
       this.availableRooms = [];
       this.occupiedRooms = [];
       this.roomsBookedToday = [];
-
   };
 
   getAvailableRoomsToday() {

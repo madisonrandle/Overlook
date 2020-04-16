@@ -10,5 +10,65 @@
 }
 
 body {
-  height: 100vh;
+  border: 3px solid yellow;
+  height: auto;
 }
+
+// PAGE LAYOUT
+#user-access-page {
+  display: grid;
+  grid-template-areas:
+  "header"
+  "main";
+  grid-template-rows: 7rem 40rem;
+}
+
+#header{
+  border: 2px solid red;
+  grid-area: header;
+  padding: $page-padding;
+}
+
+#main {
+  @include scroll;
+  border: 2px solid blue;
+  display: grid;
+  grid-template-areas:
+  "occupied available revenue";
+  grid-area: main;
+  grid-gap: 1rem;
+  padding: $page-padding;
+}
+
+#occupied-rooms,
+#available-rooms,
+#revenue-today {
+  height: 100%;
+  padding: $page-padding;
+}
+
+#occupied-rooms {
+  border: 2px solid green;
+  grid-area: occupied;
+}
+
+#available-rooms {
+  border: 2px solid purple;
+  grid-area: available;
+}
+
+#revenue-today {
+  border: 2px solid pink;
+  grid-area: revenue;
+}
+
+h2 {
+  @include sub-header;
+}
+
+button:hover {
+  @include button-hover
+}
+
+
+//

@@ -1,31 +1,60 @@
 import $ from 'jquery';
-// import ApiHandler from './ApiHandler';
-import Manager from './Manager';
-
-let manager;
 
 const domUpdates = {
   loadLoginPage: (hotel) => {
-    console.log(hotel);
     $('body').html(`
       <section>
-        <section class="header">
-        </section>
-        <div>
-          <label></label>
-          <input class="username" type="text" value="username" onfocus="this.value=''""></input>
-          <label></label>
-          <input class="password" value="password" onfocus="this.value='', this.type='password'"></input>
-          <button class="submit-login" type="submit">Login</button>
-        </div>
+        <form id="login-form">
+          <div>
+            <input id="username-input" type="text" value="manager" required>
+          </div>
+          <div>
+            <input id="password-input" type="text" value="overlook2020" required>
+          </div>
+          <div>
+            <button id="login-button" type="submit">login</button>
+          </div>
+        </form>
       </section>
     `);
-    $('.submit-login').click((e) => hotel.validateUser(e));
+    $('#login-button').click((e) => {
+      e.preventDefault(e);
+      hotel.validateUser(e);
+    });
   },
 
-  loadManagerPage: () => {
-    manager = new Manager(todaysDate);
+  customerAccessPage: () => {
 
+  },
+
+  managerAccessPage: () => {
+    $('body').html(`
+      <section id="user-access-page">
+        <header id="header"></header>
+        <main id="main">
+
+          <section id="occupied-rooms">
+            <h2>Occupied</h2>
+
+          </section>
+
+          <section id="available-rooms">
+            <h2>Available</h2>
+
+          </section>
+
+          <section id="revenue-today">
+            <h2>Total Revenue</h2>
+
+          </section>
+
+        </main>
+      </section>
+    `);
+  },
+
+  invalidLogin: () => {
+    console.log('username or password is incorrect');
   },
 }
 
