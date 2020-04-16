@@ -7,9 +7,13 @@ class Customer {
     this.isManager = isManager;
   }
 
-  getAllBookings(bookings) {
+  getAllBookings(rooms, bookings) {
     return bookings.reduce((acc, booking) => {
-      booking.userID === this.id && acc.push(booking);
+      rooms.forEach(room => {
+        if (room.number === booking.roomNumber && booking.userID === this.id) {
+          acc.push(room);
+        }
+      })
       return acc;
     }, []);
   }
