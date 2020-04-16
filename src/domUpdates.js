@@ -35,6 +35,10 @@ const domUpdates = {
 
     const availableRoomsToday = user.getAvailableRoomsToday(hotelObj.rooms, hotelObj.bookings).length;
 
+    const occupiedRoomsToday = user.getPercentageOfRoomsOccupiedToday(hotelObj.rooms);
+
+    const totalRevenueToday = user.getTotalRevenueToday(hotelObj.rooms, hotelObj.bookings);
+
 
     $('body').html(`
       <section id="user-access-page">
@@ -43,17 +47,17 @@ const domUpdates = {
 
           <section id="occupied-rooms">
             <h2>Occupied</h2>
-
+            <p id="percent-occupied-rooms">${occupiedRoomsToday}%</p>
           </section>
 
           <section id="available-rooms">
             <h2>Available</h2>
-            <p id="numAvailableRooms">${availableRoomsToday} rooms</p>
+            <p id="num-available-rooms">${availableRoomsToday} rooms</p>
           </section>
 
           <section id="revenue-today">
             <h2>Total Revenue</h2>
-
+            <p id="num-revenue-today">${totalRevenueToday}</p>
           </section>
 
         </main>
