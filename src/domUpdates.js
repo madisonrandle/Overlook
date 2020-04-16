@@ -23,10 +23,6 @@ const domUpdates = {
     });
   },
 
-  customerAccessPage: () => {
-
-  },
-
   managerAccessPage: () => {
     $('body').html(`
       <section id="user-access-page">
@@ -51,6 +47,10 @@ const domUpdates = {
         </main>
       </section>
     `);
+  },
+
+  customerAccessPage: () => {
+
   },
 
   invalidLogin: () => {
