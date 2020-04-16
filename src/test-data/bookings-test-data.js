@@ -2,7 +2,7 @@ const bookingsTestData = {
   "bookings": [
     {
       "id": "5fwrgu4i7k55hl6sz",
-      "userID": 9,
+      "userID": 1,
       "date": "2020/02/04",
       "roomNumber": 1,
       "roomServiceCharges": []
@@ -58,29 +58,29 @@ const bookingsTestData = {
     },
     {
       "id": "5fwrgu4i7k55hl6tc",
-      "userID": 22,
+      "userID": 9,
       "date": "2020/02/04",
       "roomNumber": 3,
       "roomServiceCharges": []
     },
     {
       "id": "5fwrgu4i7k55hl6td",
-      "userID": 27,
-      "date": "2020/01/31",
+      "userID": 9,
+      "date": "2020/05/31",
       "roomNumber": 20,
       "roomServiceCharges": []
     },
     {
       "id": "5fwrgu4i7k55hl6te",
-      "userID": 44,
+      "userID": 9,
       "date": "2020/01/19",
       "roomNumber": 8,
       "roomServiceCharges": []
     },
     {
       "id": "5fwrgu4i7k55hl6tf",
-      "userID": 36,
-      "date": "2020/01/25",
+      "userID": 9,
+      "date": "2019/01/25",
       "roomNumber": 2,
       "roomServiceCharges": []
     },
