@@ -89,7 +89,7 @@ const roomsTestData = {
       "costPerNight": 207.24
     },
     {
-      "number": 12,
+      "number": 20,
       "roomType": "single room",
       "bidet": false,
       "bedSize": "twin",
