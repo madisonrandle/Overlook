@@ -1,4 +1,5 @@
 import chai from 'chai';
+// import moment from 'moment';
 import Customer from '../src/Customer';
 import usersData from '../src/test-data/users-test-data';
 import bookingsData from '../src/test-data/bookings-test-data';
@@ -19,6 +20,10 @@ describe('Customer', () => {
    expect(customer).to.be.an.instanceof(Customer);
   });
 
+  it.skip('should have todaysDate', () => {
+    expect(customer.todaysDate).to.eql(moment().format('YYYY-MM-DD'));
+  });
+
   it('should have an id', () => {
     expect(customer.id).to.be.a('number');
     expect(customer.id).to.eql(9);
@@ -35,7 +40,12 @@ describe('Customer', () => {
   });
 
   it('should find all room bookings made past, present, and future', () => {
-    expect(customer.getAllBookings(roomsData.rooms, bookingsData.bookings).length).to.eql(4);
-    expect(customer.getAllBookings(roomsData.rooms, bookingsData.bookings)).to.deep.eql([roomsData.rooms[2], roomsData.rooms[11], roomsData.rooms[7], roomsData.rooms[1]]);
+    expect(customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings).length).to.eql(4);
+    expect(customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings)).to.deep.eql([roomsData.rooms[2], roomsData.rooms[11], roomsData.rooms[7], roomsData.rooms[1]]);
+  });
+
+  it('should find all present bookings for todaysDate', () => {
+    let allRoomBookings = customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings);
+    expect(Object.values(customer.getPresentBookings(allRoomBookings, bookingsData.bookings)[0])).to.deep.eql([roomsData.rooms[2]]);
   });
 });
