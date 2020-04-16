@@ -8,7 +8,7 @@ const expect = chai.expect;
 let customer;
 describe('Customer', () => {
   beforeEach(() => {
-    customer = new Customer(usersData.users[0], false);
+    customer = new Customer(usersData.users[8], false);
    });
 
   it('should be a function', () => {
@@ -21,16 +21,21 @@ describe('Customer', () => {
 
   it('should have an id', () => {
     expect(customer.id).to.be.a('number');
-    expect(customer.id).to.eql(1);
+    expect(customer.id).to.eql(9);
   });
 
   it('should have a name', () => {
     expect(customer.name).to.be.a('string');
-    expect(customer.name).to.eql('Leatha Ullrich');
+    expect(customer.name).to.eql('Faustino Quitzon');
   });
 
   it('should not be considered to have manager status', () => {
     expect(customer.isManager).to.be.a('boolean');
     expect(customer.isManager).to.eql(false);
+  });
+
+  it('should find all room bookings made past, present, and future', () => {
+    expect(customer.getAllBookings(bookingsData.bookings).length).to.eql(4);
+    expect(customer.getAllBookings(bookingsData.bookings)).to.deep.eql([bookingsData.bookings[8], bookingsData.bookings[9], bookingsData.bookings[10], bookingsData.bookings[11]]);
   });
 });
