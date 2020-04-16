@@ -35,7 +35,7 @@ describe('Customer', () => {
   });
 
   it('should find all room bookings made past, present, and future', () => {
-    expect(customer.getAllBookings(bookingsData.bookings).length).to.eql(4);
-    expect(customer.getAllBookings(bookingsData.bookings)).to.deep.eql([bookingsData.bookings[8], bookingsData.bookings[9], bookingsData.bookings[10], bookingsData.bookings[11]]);
+    expect(customer.getAllBookings(roomsData.rooms, bookingsData.bookings).length).to.eql(4);
+    expect(customer.getAllBookings(roomsData.rooms, bookingsData.bookings)).to.deep.eql([roomsData.rooms[2], roomsData.rooms[11], roomsData.rooms[7], roomsData.rooms[1]]);
   });
 });
