@@ -1,12 +1,12 @@
 import $ from 'jquery';
 import Customer from './Customer';
-import moment from 'moment';
+// import moment from 'moment';
 
 class Manager extends Customer {
   constructor(user) {
     super(user, true)
-      this.todaysDate = '2020/02/04';
-      // this.todaysDate = moment().format('YYYY-MM-DD');
+      this.todaysDate = '2020/01/09';
+      // this.todaysDate = moment().format('YYYY/MM/DD');
       this.availableRoomsToday = [];
       this.occupiedRooms = [];
       this.roomsBookedToday = [];
