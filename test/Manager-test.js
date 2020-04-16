@@ -30,7 +30,7 @@ describe('Manager', () => {
   });
 
   it('should return an array of available rooms for today\'s date', () => {
-    // expect(manager.getAvailableRoomsToday().length).to.equal(12);
+    expect(manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings).length).to.equal(10);
   });
 
   // it('should calculate the total revenue for today\'s date', () => {
