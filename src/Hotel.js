@@ -17,7 +17,7 @@ class Hotel {
       domUpdates.customerAccessPage(foundUser);
     } else {
       $('#username-input').val() === 'manager' && $('#password-input').val() === 'overlook2020' ?
-        domUpdates.managerAccessPage(foundUser) :
+        domUpdates.managerAccessPage() :
         domUpdates.invalidLogin();
     }
   }
