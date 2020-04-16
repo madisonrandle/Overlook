@@ -25,12 +25,15 @@ const domUpdates = {
       e.preventDefault(e);
       hotel.validateUser(e);
     });
-    console.log(hotelObj.users);
   },
 
-  managerAccessPage: (user) => {
-    user = new Manager(user);
-    console.log('user', user);
+  managerAccessPage: () => {
+    user = new Manager({
+      id: 51,
+      name: 'Billy Joe'
+    });
+
+    const availableRoomsToday = user.getAvailableRoomsToday(hotelObj.rooms, hotelObj.bookings).length;
 
 
     $('body').html(`
@@ -45,7 +48,7 @@ const domUpdates = {
 
           <section id="available-rooms">
             <h2>Available</h2>
-
+            <p id="numAvailableRooms">${availableRoomsToday} rooms</p>
           </section>
 
           <section id="revenue-today">
@@ -59,9 +62,9 @@ const domUpdates = {
   },
 
   customerAccessPage: (user) => {
+    // user = new Customer(user);
+    // console.log('user', user);
 
-    user = new Customer(user);
-    console.log('user', user);
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
