@@ -69,7 +69,9 @@ button:hover {
   @include button-hover;
 }
 
-#numAvailableRooms {
+#num-available-rooms,
+#percent-occupied-rooms,
+#num-revenue-today {
   font-size: $manager-numbers;
   padding: $page-padding;
 }
