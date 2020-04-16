@@ -42,28 +42,28 @@ body {
 #occupied-rooms,
 #available-rooms,
 #revenue-today,
-#today-booking,
-#upcoming-booking,
-#past-booking {
+#today-bookings,
+#upcoming-bookings,
+#past-bookings {
   @include scroll;
   height: 100%;
   padding: $page-padding;
 }
 
 #occupied-rooms,
-#today-booking {
+#today-bookings {
   border: 2px solid green;
   grid-area: left;
 }
 
 #available-rooms,
-#upcoming-booking {
+#upcoming-bookings {
   border: 2px solid purple;
   grid-area: middle;
 }
 
 #revenue-today,
-#past-booking {
+#past-bookings {
   border: 2px solid pink;
   grid-area: right;
 }
