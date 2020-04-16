@@ -31,20 +31,20 @@ class Manager extends Customer {
     return this.availableRooms;
   };
 
-  // getTotalRevenueToday() {
-  //   return this.rooms.reduce((totalRevenue, room) => {
-  //     this.bookings.forEach(booking => {
-  //       if (booking.date === this.todaysDate && room.number === booking.roomNumber) {
-  //         totalRevenue += room.costPerNight;
-  //       };
-  //     });
-  //     return totalRevenue;
-  //   }, 0);
-  // };
-  //
-  // getPercentageOfRoomsOccupiedToday() {
-  //   return this.roomsBookedToday.length * 100 / this.rooms.length;
-  // };
+  getTotalRevenueToday(rooms, bookings) {
+    return rooms.reduce((totalRevenue, room) => {
+      bookings.forEach(booking => {
+        if (booking.date === this.todaysDate && room.number === booking.roomNumber) {
+          totalRevenue += room.costPerNight;
+        };
+      });
+      return totalRevenue;
+    }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
+  };
+
+  getPercentageOfRoomsOccupiedToday(rooms) {
+    return Math.round(this.roomsBookedToday.length * 100 / rooms.length);
+  };
 
 };
 
