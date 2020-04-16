@@ -33,11 +33,12 @@ describe('Manager', () => {
     expect(manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings).length).to.equal(10);
   });
 
-  // it('should calculate the total revenue for today\'s date', () => {
-  //   expect(manager.getTotalRevenueToday()).to.be.a('number');
-  // });
+  it('should calculate the total revenue for today\'s date', () => {
+    expect(manager.getTotalRevenueToday(roomsData.rooms, bookingsData.bookings)).to.eql('$849.54');
+  });
 
-  // it('should calculate the percentage of rooms occupied for today\'s date', () => {
-  // expect(manager.getPercentageOfRoomsOccupiedToday()).to.be.a('number');
-  // });
+  it('should calculate the percentage of rooms occupied for today\'s date', () => {
+    manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings);
+    expect(manager.getPercentageOfRoomsOccupiedToday(roomsData.rooms)).to.eql(17);
+  });
 });
