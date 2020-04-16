@@ -1,6 +1,7 @@
 import chai from 'chai';
 import moment from 'moment';
 import Manager from '../src/Manager';
+import Customer from '../src/Customer';
 import usersData from '../src/test-data/users-test-data';
 import roomsData from '../src/test-data/rooms-test-data';
 import bookingsData from '../src/test-data/bookings-test-data';
@@ -20,10 +21,6 @@ describe('Manager', () => {
    expect(manager).to.be.an.instanceof(Manager);
   });
 
-  it('should know what today\'s date is', () => {
-    expect(manager.todaysDate).to.equal(moment().format('YYYY-MM-DD'));
-  });
-
   it('should accept an array of all available rooms', () => {
     expect(manager.availableRooms).to.be.a('array');
   });
@@ -33,16 +30,15 @@ describe('Manager', () => {
   });
 
   it('should return an array of available rooms for today\'s date', () => {
-    expect(manager.getAvailableRoomsToday().length).to.equal(12);
+    expect(manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings).length).to.equal(10);
   });
 
   it('should calculate the total revenue for today\'s date', () => {
-    expect(manager.getTotalRevenueToday()).to.be.a('number');
+    expect(manager.getTotalRevenueToday(roomsData.rooms, bookingsData.bookings)).to.eql('$849.54');
   });
 
   it('should calculate the percentage of rooms occupied for today\'s date', () => {
-    expect(manager.getPercentageOfRoomsOccupiedToday()).to.be.a('number');
+    manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings);
+    expect(manager.getPercentageOfRoomsOccupiedToday(roomsData.rooms)).to.eql(17);
   });
-
-
 });

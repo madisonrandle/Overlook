@@ -1,10 +1,8 @@
 import $ from 'jquery';
 import domUpdates from './domUpdates';
-import moment from 'moment';
 
 class Hotel {
-  constructor(users, rooms, bookings, todaysDate) {
-    this.todaysDate = moment().format('YYYY-MM-DD');
+  constructor(users, rooms, bookings) {
     this.users = users.users;
     this.rooms = rooms.rooms;
     this.bookings = bookings.bookings;
