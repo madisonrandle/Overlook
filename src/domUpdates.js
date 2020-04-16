@@ -76,18 +76,18 @@ const domUpdates = {
         </header>
         <main id="main">
 
-          <section id="occupied-rooms">
-
-
-          </section>
-
-          <section id="available-rooms">
-
+          <section id="today-booking">
+            <h2>Today</h2>
 
           </section>
 
-          <section id="revenue-today">
+          <section id="upcoming-booking">
+            <h2>Upcoming</h2>
 
+          </section>
+
+          <section id="past-booking">
+            <h2>History</h2>
 
           </section>
 
