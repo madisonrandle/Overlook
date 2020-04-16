@@ -1,7 +1,9 @@
 import $ from 'jquery';
+import Manager from './Manager';
 
 const domUpdates = {
   loadLoginPage: (hotel) => {
+
     $('body').html(`
       <section>
         <form id="login-form">
@@ -24,6 +26,7 @@ const domUpdates = {
   },
 
   managerAccessPage: () => {
+
     $('body').html(`
       <section id="user-access-page">
         <header id="header"></header>
