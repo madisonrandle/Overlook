@@ -1,10 +1,9 @@
 import $ from 'jquery';
-// import moment from 'moment';
+import moment from 'moment';
 
 class Customer {
-  constructor(user, isManager = false) {
-    this.todaysDate = '2020/01/09';
-    // this.todaysDate = moment().format('YYYY/MM/DD');
+  constructor(user, isManager = false, todaysDate) {
+    this.todaysDate = moment().format('YYYY/MM/DD');
     this.id = user.id;
     this.name = user.name;
     this.isManager = isManager;
@@ -21,20 +20,31 @@ class Customer {
     }, []);
   }
 
-getPresentBookings(allRoomBookings, bookings) {
-  return bookings.reduce((acc, booking) => {
-    allRoomBookings.forEach(roomBooking => {
-      if (this.id === booking.userID && booking.date === '2020/01/09' && booking.roomNumber === roomBooking.number) {
-      // if (this.id === booking.userID && booking.date === this.todaysDate) {
-        let roomObj = {};
-        roomObj[booking.date] = roomBooking;
-        acc.push(roomObj);
+  getPresentBookings(allRoomBookings, bookings) {
+    return bookings.reduce((acc, booking) => {
+      allRoomBookings.forEach(roomBooking => {
+        if (this.id === booking.userID && booking.date === this.todaysDate && booking.roomNumber === roomBooking.number) {
+          let roomObj = {};
+          roomObj[booking.date] = roomBooking;
+          acc.push(roomObj);
+        }
+      })
+      return acc;
+    }, []);
+  }
+
+  getPastBookings(allRoomBookings, bookings) {
+    let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+    return sortedBookings.reduce((acc, booking) => {
+      if (new Date(booking.date) < new Date(this.todaysDate)) {
+        allRoomBookings.forEach(roomBooking => {
+          if (booking.roomNumber === roomBooking.number) {
+            acc.push(roomBooking);
+          }
+        })
       }
-    })
-    return acc;
-  }, []);
-}
-
-
+      return acc;
+    }, []);
+  }
 }
 export default Customer;
