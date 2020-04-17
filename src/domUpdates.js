@@ -66,6 +66,7 @@ const domUpdates = {
     `);
   },
 
+  // Should I break this into seperate functions?
   customerAccessPage: (user) => {
     user = new Customer(user);
     const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings);
@@ -74,25 +75,17 @@ const domUpdates = {
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
-
         </header>
         <main id="main">
-
           <section id="today-bookings">
             <h2>Today</h2>
-
           </section>
-
           <section id="upcoming-bookings">
             <h2>Upcoming</h2>
-
           </section>
-
           <section id="past-bookings">
             <h2>History</h2>
-
           </section>
-
         </main>
       </section>
     `);
@@ -100,7 +93,7 @@ const domUpdates = {
     if (presentBookings.length) {
       presentBookings.forEach(presentBooking => {
         Object.keys(presentBooking).forEach(date => {
-          let formattedDate = moment(`${date}`, 'YYYY-MM-DD').format('l');
+          let formattedDate = moment(`${date}`, 'YYYY/MM/DD').format('l');
           $('#today-bookings').append(`
             <p>${formattedDate}</p>
             <p>${presentBooking[date].roomType}</p>
