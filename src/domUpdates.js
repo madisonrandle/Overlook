@@ -72,6 +72,10 @@ const domUpdates = {
     const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings);
     const presentBookings = user.getPresentBookings(allCustomerRoomBookings, hotelObj.bookings);
 
+    const pastBookings = user.getPastBookings(allCustomerRoomBookings, hotelObj.bookings)
+
+
+
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
@@ -109,6 +113,31 @@ const domUpdates = {
         </div>
       `);
     }
+
+
+    let pastBookingRooms = Object.keys(pastBookings).reduce((acc, booking) => {
+      allCustomerRoomBookings.forEach(customerRoomBooking => {
+        if (parseInt(booking) === customerRoomBooking.number) {
+          pastBookings[booking].forEach(el => {
+            if (!acc.includes(customerRoomBooking)) {
+              acc.push(customerRoomBooking)
+            }
+          })
+        }
+      })
+      return acc;
+    }, []);
+
+    // get date listed with each booking
+    pastBookingRooms.forEach(pastBooking => {
+      $('#past-bookings').append(`
+        <div style="border: 1px solid black;">
+          <p style="padding: 1rem;">${pastBooking.roomType}</p>
+          <p style="padding: 1rem;">${pastBooking.numBeds} ${pastBooking.bedSize}</p>
+          <p style="padding: 1rem;">${pastBooking.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+        </div>
+      `);
+    })
   },
 
   invalidLogin: () => {
