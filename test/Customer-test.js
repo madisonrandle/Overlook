@@ -1,5 +1,5 @@
 import chai from 'chai';
-// import moment from 'moment';
+import moment from 'moment';
 import Customer from '../src/Customer';
 import usersData from '../src/test-data/users-test-data';
 import bookingsData from '../src/test-data/bookings-test-data';
@@ -20,32 +20,62 @@ describe('Customer', () => {
    expect(customer).to.be.an.instanceof(Customer);
   });
 
-  it.skip('should have todaysDate', () => {
-    expect(customer.todaysDate).to.eql(moment().format('YYYY-MM-DD'));
+  it('should have today\'s date', () => {
+    expect(customer.todaysDate).to.eql(moment().format('YYYY/MM/DD'));
   });
 
-  it('should have an id', () => {
+  it('should have a unique id', () => {
     expect(customer.id).to.be.a('number');
     expect(customer.id).to.eql(9);
   });
 
-  it('should have a name', () => {
+  it('should have a unique name', () => {
     expect(customer.name).to.be.a('string');
     expect(customer.name).to.eql('Faustino Quitzon');
   });
 
-  it('should not be considered to have manager status', () => {
+  it('should not be considered a manager', () => {
     expect(customer.isManager).to.be.a('boolean');
     expect(customer.isManager).to.eql(false);
   });
 
-  it('should find all room bookings made past, present, and future', () => {
+  it('should find all past, present, and future customer bookings', () => {
     expect(customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings).length).to.eql(4);
-    expect(customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings)).to.deep.eql([roomsData.rooms[2], roomsData.rooms[11], roomsData.rooms[7], roomsData.rooms[1]]);
+
+    expect(customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings)).to.deep.eql([roomsData.rooms[8], roomsData.rooms[9], roomsData.rooms[10], roomsData.rooms[11]]);
   });
 
-  it('should find all present bookings for todaysDate', () => {
+  it('should find all customer bookings for todays date', () => {
     let allRoomBookings = customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings);
-    expect(Object.values(customer.getPresentBookings(allRoomBookings, bookingsData.bookings)[0])).to.deep.eql([roomsData.rooms[2]]);
+
+    expect(customer.getPresentBookings(allRoomBookings, bookingsData.bookings)).to.deep.eql([
+      {
+        '2020/04/16': {
+          number: 11,
+          roomType: 'single room',
+
+          bidet: true,
+          bedSize: 'twin',
+          numBeds: 2,
+          costPerNight: 207.24
+        }
+      },
+      {
+        '2020/04/16': {
+          number: 12,
+          roomType: 'single room',
+          bidet: false,
+          bedSize: 'twin',
+          numBeds: 2,
+          costPerNight: 172.09
+        }
+      }
+    ]);
+  });
+
+  it('should find all customer bookings prior to todays date', () => {
+    let allRoomBookings = customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings);
+    expect(customer.getPastBookings(allRoomBookings, bookingsData.bookings)).to.deep.eql([roomsData.rooms[8]]);
+
   });
 });
