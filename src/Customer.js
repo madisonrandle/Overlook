@@ -33,18 +33,47 @@ class Customer {
     }, []);
   }
 
-  getPastBookings(allRoomBookings, bookings) {
+  getPastBookings(allUserRoomBookings, bookings) {
+
+    let pastRoomObj = {};
+
     let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-    return sortedBookings.reduce((acc, booking) => {
-      if (new Date(booking.date) < new Date(this.todaysDate)) {
-        allRoomBookings.forEach(roomBooking => {
-          if (booking.roomNumber === roomBooking.number) {
-            acc.push(roomBooking);
+    let pastBookings = sortedBookings.filter(booking => new Date(booking.date) < new Date(this.todaysDate));
+    let usersPastBookings = pastBookings.filter(pastBooking => this.id === pastBooking.userID);
+
+    return allUserRoomBookings.reduce((acc, roomBooking) => {
+      acc[roomBooking.number] = [];
+        usersPastBookings.forEach(userPastBooking => {
+          if (userPastBooking.roomNumber === roomBooking.number) {
+            acc[roomBooking.number].push(userPastBooking);
           }
-        })
-      }
+        });
       return acc;
-    }, []);
+    }, {});
+
+
+
+    // return usersPastBookings.reduce((acc, usersPastBooking) => {
+    //   // pastRoomObj[usersPastBooking.date] = 'hi';
+    //   pastRoomObj[usersPastBooking.date] = null;
+    //   if (!acc.includes(pastRoomObj)) {
+    //     acc.push(pastRoomObj)
+    //
+    //   }
+    //
+    //   //   allRoomBookings.forEach(roomBooking => {
+    //
+    //   //     if (usersPastBooking.roomNumber === roomBooking.number) {
+    //   //       acc.push(pastRoomObj[usersPastBooking.date] = roomBooking);
+    //   //     }
+    //
+    //   //   })
+    //
+    //
+    //
+    //   return acc;
+    // }, []);
+
   }
 }
 export default Customer;
