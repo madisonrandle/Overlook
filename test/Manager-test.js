@@ -30,15 +30,15 @@ describe('Manager', () => {
   });
 
   it('should return an array of available rooms for today\'s date', () => {
-    expect(manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings).length).to.equal(10);
+    expect(manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings).length).to.equal(11);
   });
 
   it('should calculate the total revenue for today\'s date', () => {
-    expect(manager.getTotalRevenueToday(roomsData.rooms, bookingsData.bookings)).to.eql('$849.54');
+    expect(manager.getTotalRevenueToday(roomsData.rooms, bookingsData.bookings)).to.eql('$491.14');
   });
 
   it('should calculate the percentage of rooms occupied for today\'s date', () => {
     manager.getAvailableRoomsToday(roomsData.rooms, bookingsData.bookings);
-    expect(manager.getPercentageOfRoomsOccupiedToday(roomsData.rooms)).to.eql(17);
+    expect(manager.getPercentageOfRoomsOccupiedToday(roomsData.rooms)).to.eql(8);
   });
 });
