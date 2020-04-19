@@ -69,10 +69,16 @@ const domUpdates = {
   // Should I break this into seperate functions?
   customerAccessPage: (user) => {
     user = new Customer(user);
+
     const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings);
+
     const presentBookings = user.getPresentBookings(allCustomerRoomBookings, hotelObj.bookings);
 
-    const pastBookings = user.getPastBookings(allCustomerRoomBookings, hotelObj.bookings)
+    const pastBookings = user.getPastBookings(allCustomerRoomBookings, hotelObj.bookings);
+
+    const futureBookings = user.getFutureBookings(allCustomerRoomBookings, hotelObj.bookings);
+
+    const totalSpent = user.getTotalSpentOnBookings(allCustomerRoomBookings);
 
 
 
@@ -80,7 +86,10 @@ const domUpdates = {
       <section id="user-access-page">
         <header id="header">
         </header>
-        <main id="main">
+        <main id="main-customer-page">
+          <section id="total-spent">
+
+          </section>
           <section id="today-bookings">
             <h2>Today</h2>
           </section>
@@ -137,7 +146,11 @@ const domUpdates = {
           <p style="padding: 1rem;">${pastBooking.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
         </div>
       `);
-    })
+    });
+
+    $('#total-spent').append(`
+      <p>Total Amount Spent: ${totalSpent}</p>
+    `);
   },
 
   invalidLogin: () => {
