@@ -39,6 +39,21 @@ body {
   padding: $page-padding;
 }
 
+#main-customer-page {
+  @include scroll;
+  border: 2px solid blue;
+  display: grid;
+  grid-template-areas:
+  "top top top"
+  "left middle right";
+  grid-gap: 1rem;
+}
+
+
+#total-spent {
+  grid-area: top;
+}
+
 #occupied-rooms,
 #available-rooms,
 #revenue-today,
