@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import moment from 'moment';
 
+
+
 class Customer {
   constructor(user, isManager = false, todaysDate) {
     this.todaysDate = moment().format('YYYY/MM/DD');
@@ -20,9 +22,9 @@ class Customer {
     }, []);
   }
 
-  getPresentBookings(allRoomBookings, bookings) {
+  getPresentBookings(allUserRoomBookings, bookings) {
     return bookings.reduce((acc, booking) => {
-      allRoomBookings.forEach(roomBooking => {
+      allUserRoomBookings.forEach(roomBooking => {
         if (this.id === booking.userID && booking.date === this.todaysDate && booking.roomNumber === roomBooking.number) {
           let roomObj = {};
           roomObj[booking.date] = roomBooking;
@@ -34,9 +36,6 @@ class Customer {
   }
 
   getPastBookings(allUserRoomBookings, bookings) {
-
-    let pastRoomObj = {};
-
     let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
     let pastBookings = sortedBookings.filter(booking => new Date(booking.date) < new Date(this.todaysDate));
     let usersPastBookings = pastBookings.filter(pastBooking => this.id === pastBooking.userID);
@@ -50,30 +49,32 @@ class Customer {
         });
       return acc;
     }, {});
-
-
-
-    // return usersPastBookings.reduce((acc, usersPastBooking) => {
-    //   // pastRoomObj[usersPastBooking.date] = 'hi';
-    //   pastRoomObj[usersPastBooking.date] = null;
-    //   if (!acc.includes(pastRoomObj)) {
-    //     acc.push(pastRoomObj)
-    //
-    //   }
-    //
-    //   //   allRoomBookings.forEach(roomBooking => {
-    //
-    //   //     if (usersPastBooking.roomNumber === roomBooking.number) {
-    //   //       acc.push(pastRoomObj[usersPastBooking.date] = roomBooking);
-    //   //     }
-    //
-    //   //   })
-    //
-    //
-    //
-    //   return acc;
-    // }, []);
-
   }
+
+  getFutureBookings(allUserRoomBookings, bookings) {
+    let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+    let futureBookings = sortedBookings.filter(booking => new Date(booking.date) > new Date(this.todaysDate));
+    let usersFutureBookings = futureBookings.filter(futureBooking => this.id === futureBooking.userID);
+
+    return allUserRoomBookings.reduce((acc, roomBooking) => {
+      acc[roomBooking.number] = [];
+        usersFutureBookings.forEach(usersFutureBooking => {
+          if (usersFutureBooking.roomNumber === roomBooking.number) {
+            acc[roomBooking.number].push(usersFutureBooking);
+          }
+        });
+      return acc;
+    }, {});
+  }
+
+  getTotalSpentOnBookings(allUserRoomBookings) {
+    return allUserRoomBookings.reduce((acc, room) => {
+      acc += room.costPerNight;
+      return acc;
+    }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
+  }
+
+
+
 }
 export default Customer;
