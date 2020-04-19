@@ -74,6 +74,12 @@ class Customer {
     }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
   }
 
+  bookRoom(){
+    let bookingDate = $('#booking-date-input').val();
+    let formattedDate =  moment(bookingDate).format('YYYY/MM/DD');
+    console.log(formattedDate);
+  }
+
 
 
 }
