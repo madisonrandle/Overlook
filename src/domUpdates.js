@@ -150,7 +150,16 @@ const domUpdates = {
 
     $('#total-spent').append(`
       <p>Total Amount Spent: ${totalSpent}</p>
+      <form>
+        <input type="date" id="booking-date-input">
+        <button type='submit' id='booking-form-submit-button'>book room</button>
+      </form>
     `);
+
+    $('#booking-form-submit-button').click((e) => {
+      e.preventDefault(e);
+      user.bookRoom(e);
+    });
   },
 
   invalidLogin: () => {
