@@ -1,13 +1,10 @@
 import $ from 'jquery';
 import Customer from './Customer';
-import moment from 'moment';
 
 class Manager extends Customer {
-  constructor(user) {
-    super(user, true)
-      this.todaysDate = '2020/02/04';
-      // this.todaysDate = moment().format('YYYY-MM-DD');
-      this.availableRooms = [];
+  constructor(user, todaysDate) {
+    super(user, true, todaysDate)
+      this.availableRoomsToday = [];
       this.occupiedRooms = [];
       this.roomsBookedToday = [];
   };
@@ -23,12 +20,12 @@ class Manager extends Customer {
 
     rooms.forEach(room => {
       bookings.forEach(booking => {
-        if (!this.roomsBookedToday.includes(room) && !this.availableRooms.includes(room)) {
-          this.availableRooms.push(room);
+        if (!this.roomsBookedToday.includes(room) && !this.availableRoomsToday.includes(room)) {
+          this.availableRoomsToday.push(room);
         }
       })
     });
-    return this.availableRooms;
+    return this.availableRoomsToday;
   };
 
   getTotalRevenueToday(rooms, bookings) {
