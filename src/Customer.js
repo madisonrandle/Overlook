@@ -9,6 +9,9 @@ class Customer {
     this.id = user.id;
     this.name = user.name;
     this.isManager = isManager;
+    this.unavailableRooms = [];
+    this.availableRooms = [];
+
   }
 
   getAllRoomBookings(rooms, bookings) {
@@ -74,13 +77,25 @@ class Customer {
     }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
   }
 
-  bookRoom(){
+  getAvailableRooms(rooms, bookings){
     let bookingDate = $('#booking-date-input').val();
     let formattedDate =  moment(bookingDate).format('YYYY/MM/DD');
-    console.log(formattedDate);
+
+    rooms.forEach(room => {
+      bookings.forEach(booking => {
+        if (booking.roomNumber === room.number && booking.date === formattedDate) {
+          this.unavailableRooms.push(room);
+          console.log('booking date: ', booking.date);
+        };
+      });
+    });
+    
+    rooms.forEach(room => {
+      if (!this.unavailableRooms.includes(room)) {
+        this.availableRooms.push(room)
+      };
+    })
   }
-
-
 
 }
 export default Customer;
