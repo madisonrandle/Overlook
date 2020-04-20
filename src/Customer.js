@@ -85,6 +85,7 @@ class Customer {
         };
       });
     });
+    console.log('not availble:  ', this.unavailableRooms);
     rooms.forEach(room => {
       if (!this.unavailableRooms.includes(room)) {
         this.availableRooms.push(room)
@@ -94,6 +95,10 @@ class Customer {
 
   getRoomByType(availableRooms, id) {
     return availableRooms.filter(room => room.roomType === id);
+  }
+
+  postBooking(bookings) {
+    console.log('yuh bitch', bookings);
   }
 
 }

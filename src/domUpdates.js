@@ -178,15 +178,16 @@ const domUpdates = {
             <p style="padding: 1rem;">${room.roomType}</p>
             <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
             <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-            <button id="book-room">Book Room</button>
+            <button class="book-room">Book Room</button>
           </div>
         `)
       });
 
       $('.room-type-button').click((e) => {
-        let splitID = e.target.id.split(' ');
-        let jointID = splitID.join(' ');
-        let filteredRoomsByType = user.getRoomByType(user. availableRooms, jointID);
+        // let splitID = e.target.id.split(' ');
+        // let jointID = splitID.join(' ');
+        let uniqueID = e.target.id;
+        let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
         $('#main-available-rooms').html(``);
         filteredRoomsByType.forEach(room => {
           $('#main-available-rooms').append(`
@@ -195,12 +196,22 @@ const domUpdates = {
               <p style="padding: 1rem;">${room.roomType}</p>
               <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
               <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-              <button id="book-room">Book Room</button>
+              <button class="book-room">Book Room</button>
             </div>
           `)
         });
-      })
+      });
+
     });
+
+
+    $('.book-room').on('click', (e) => {
+      console.log(e.target);
+      console.log('hi');
+      // user.postBooking(hotelObj.bookings);
+    })
+
+
   },
 
   invalidLogin: () => {
