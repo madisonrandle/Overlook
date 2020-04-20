@@ -40,7 +40,6 @@ const domUpdates = {
 
     const totalRevenueToday = user.getTotalRevenueToday(hotelObj.rooms, hotelObj.bookings);
 
-
     $('body').html(`
       <section id="user-access-page">
         <header id="header"></header>
@@ -163,19 +162,19 @@ const domUpdates = {
           </header>
           <main id="main-available-rooms">
             <nav id="filter-room-by-type">
-              <button id="residential-room-type">Residential Suite</button>
-              <button id="suite-room-type">Suite</button>
-              <button id="single-room-type">Single Room</button>
-              <button id="junior-room-type">Junior Suite</button>
+              <button class="room-type-button" id="residential suite">Residential Suite</button>
+              <button class="room-type-button" id="suite">Suite</button>
+              <button class="room-type-button" id="single room">Single Room</button>
+              <button class="room-type-button" id="junior suite">Junior Suite</button>
             </nav>
           </main>
         </section>
       `);
 
       user.availableRooms.forEach(room => {
-        console.log(room.roomType);
         $('#main-available-rooms').append(`
           <div style="border: 1px solid black;">
+            <p style="padding: 1rem;">${room.number}</p>
             <p style="padding: 1rem;">${room.roomType}</p>
             <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
             <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
@@ -184,6 +183,23 @@ const domUpdates = {
         `)
       });
 
+      $('.room-type-button').click((e) => {
+        let splitID = e.target.id.split(' ');
+        let jointID = splitID.join(' ');
+        let filteredRoomsByType = user.getRoomByType(user. availableRooms, jointID);
+        $('#main-available-rooms').html(``);
+        filteredRoomsByType.forEach(room => {
+          $('#main-available-rooms').append(`
+            <div style="border: 1px solid black;">
+              <p style="padding: 1rem;">${room.number}</p>
+              <p style="padding: 1rem;">${room.roomType}</p>
+              <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+              <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+              <button id="book-room">Book Room</button>
+            </div>
+          `)
+        });
+      })
     });
   },
 
