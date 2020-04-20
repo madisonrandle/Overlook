@@ -25,6 +25,7 @@ class Manager extends Customer {
         }
       })
     });
+    
     return this.availableRoomsToday;
   };
 
