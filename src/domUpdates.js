@@ -80,17 +80,12 @@ const domUpdates = {
 
     const totalSpent = user.getTotalSpentOnBookings(allCustomerRoomBookings);
 
-    // const availRooms = user.getAvailableRooms(hotelObj.rooms, hotelObj.bookings);
-
-
-
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
         </header>
         <main id="main-customer-page">
           <section id="total-spent">
-
           </section>
           <section id="today-bookings">
             <h2>Today</h2>
@@ -167,16 +162,24 @@ const domUpdates = {
           <header id="header">
           </header>
           <main id="main-available-rooms">
+            <nav id="filter-room-by-type">
+              <button id="residential-room-type">Residential Suite</button>
+              <button id="suite-room-type">Suite</button>
+              <button id="single-room-type">Single Room</button>
+              <button id="junior-room-type">Junior Suite</button>
+            </nav>
           </main>
         </section>
       `);
 
       user.availableRooms.forEach(room => {
+        console.log(room.roomType);
         $('#main-available-rooms').append(`
           <div style="border: 1px solid black;">
             <p style="padding: 1rem;">${room.roomType}</p>
             <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
             <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+            <button id="book-room">Book Room</button>
           </div>
         `)
       });
