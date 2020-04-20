@@ -1,8 +1,6 @@
 import $ from 'jquery';
 import moment from 'moment';
 
-
-
 class Customer {
   constructor(user, isManager = false, todaysDate) {
     this.todaysDate = moment().format('YYYY/MM/DD');
@@ -80,21 +78,22 @@ class Customer {
   getAvailableRooms(rooms, bookings){
     let bookingDate = $('#booking-date-input').val();
     let formattedDate =  moment(bookingDate).format('YYYY/MM/DD');
-
     rooms.forEach(room => {
       bookings.forEach(booking => {
         if (booking.roomNumber === room.number && booking.date === formattedDate) {
           this.unavailableRooms.push(room);
-          console.log('booking date: ', booking.date);
         };
       });
     });
-    
     rooms.forEach(room => {
       if (!this.unavailableRooms.includes(room)) {
         this.availableRooms.push(room)
       };
     })
+  }
+
+  getRoomByType(availableRooms, id) {
+    return availableRooms.filter(room => room.roomType === id);
   }
 
 }
