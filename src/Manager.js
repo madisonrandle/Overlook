@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Customer from './Customer';
+import domUpdates from './domUpdates';
 
 class Manager extends Customer {
   constructor(user, todaysDate) {
@@ -42,6 +43,12 @@ class Manager extends Customer {
 
   getPercentageOfRoomsOccupiedToday(rooms) {
     return Math.round(this.roomsBookedToday.length * 100 / rooms.length);
+  };
+
+  getSerachedUser(searchedUser, users, userObj) {
+    let foundUser = users.find(user => searchedUser === user.name.toLowerCase());
+    domUpdates.managerCustomerSearchPage(foundUser, userObj);
+
   };
 
 };
