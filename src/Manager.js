@@ -45,10 +45,10 @@ class Manager extends Customer {
     return Math.round(this.roomsBookedToday.length * 100 / rooms.length);
   };
 
-  getSerachedUser(searchedUser, users, userObj) {
+  getSerachedUser(searchedUser, users) {
     let foundUser = users.find(user => searchedUser === user.name.toLowerCase());
-    domUpdates.managerCustomerSearchPage(foundUser, userObj);
-
+    let customer = new Customer(foundUser);
+    domUpdates.managerCustomerSearchPage(customer);
   };
 
 };
