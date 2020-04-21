@@ -355,7 +355,7 @@ const domUpdates = {
       });
 
       $(".book-room").click((e) => {
-        user.postBooking(e.target.id);
+        user.postBooking(e, e.target.id);
       })
     });
   },
