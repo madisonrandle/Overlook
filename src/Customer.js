@@ -1,9 +1,12 @@
 import $ from 'jquery';
 import moment from 'moment';
+import { fetchData } from './ApiHandler';
+
 
 class Customer {
   constructor(user, isManager = false, todaysDate) {
     this.todaysDate = moment().format('YYYY/MM/DD');
+    this.bookingDate = null;
     this.id = user.id;
     this.name = user.name;
     this.isManager = isManager;
@@ -77,15 +80,14 @@ class Customer {
 
   getAvailableRooms(rooms, bookings){
     let bookingDate = $('#booking-date-input').val();
-    let formattedDate =  moment(bookingDate).format('YYYY/MM/DD');
+    this.bookingDate =  moment(bookingDate).format('YYYY/MM/DD');
     rooms.forEach(room => {
       bookings.forEach(booking => {
-        if (booking.roomNumber === room.number && booking.date === formattedDate) {
+        if (booking.roomNumber === room.number && booking.date === this.bookingDate) {
           this.unavailableRooms.push(room);
         };
       });
     });
-    console.log('not availble:  ', this.unavailableRooms);
     rooms.forEach(room => {
       if (!this.unavailableRooms.includes(room)) {
         this.availableRooms.push(room)
@@ -97,8 +99,20 @@ class Customer {
     return availableRooms.filter(room => room.roomType === id);
   }
 
-  postBooking(bookings) {
-    console.log('yuh bitch', bookings);
+  postBooking(roomNumber) {
+    let options =  {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "userID": this.id,
+          "date": this.bookingDate,
+          "roomNumber": parseInt(roomNumber)
+        }),
+      }
+
+    fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
   }
 
 }
