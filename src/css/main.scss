@@ -28,16 +28,16 @@ body {
   padding: $page-padding;
 }
 
-#main {
-  @include scroll;
-  border: 2px solid blue;
-  display: grid;
-  grid-template-areas:
-  "left middle right";
-  grid-area: main;
-  grid-gap: 1rem;
-  padding: $page-padding;
-}
+// #main {
+//   @include scroll;
+//   border: 2px solid blue;
+//   display: grid;
+//   grid-template-areas:
+//   "left middle right";
+//   grid-area: main;
+//   grid-gap: 1rem;
+//   padding: $page-padding;
+// }
 
 #main-available-rooms {
   @include scroll;
@@ -46,7 +46,8 @@ body {
   padding: $page-padding;
 }
 
-#main-customer-page {
+#main-customer-page,
+#main {
   @include scroll;
   border: 2px solid blue;
   display: grid;
@@ -57,7 +58,8 @@ body {
 }
 
 
-#total-spent {
+#total-spent,
+#manager-search-container {
   grid-area: top;
 }
 

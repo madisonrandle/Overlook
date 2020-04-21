@@ -3,7 +3,7 @@ import moment from 'moment';
 import Manager from './Manager';
 import Customer from './Customer';
 
-let hotelObj, user;
+let hotelObj, user, customer;
 const domUpdates = {
   loadLoginPage: (hotel) => {
     hotelObj = hotel;
@@ -28,7 +28,10 @@ const domUpdates = {
     });
   },
 
-  managerAccessPage: () => {
+  managerAccessPage: (customer) => {
+    console.log(customer);
+    // customer = new Customer(customer);
+
     user = new Manager({
       id: 51,
       name: 'Billy Joe'
@@ -42,6 +45,7 @@ const domUpdates = {
       <section id="user-access-page">
         <header id="header"></header>
         <main id="main">
+        <section id="manager-search-container"></section>
           <section id="occupied-rooms">
             <h2>Occupied</h2>
             <p id="percent-occupied-rooms">${occupiedRoomsToday}%</p>
@@ -57,19 +61,40 @@ const domUpdates = {
         </main>
       </section>
     `);
+
+    $('#manager-search-container').append(`
+      <input type="text" id="manager-search-input">
+      <button type='submit' id='manager-search-submit-button'>search customer</button>
+    `);
+
+    $('#manager-search-submit-button').click((e) => {
+      let searchedUser = $('#manager-search-input').val().toLowerCase();
+      // user.getSerachedUser(searchedUser, hotelObj.users, customer);
+    })
+
   },
 
-  // Should I break this into seperate functions?
+  managerCustomerSearchPage: (searchedUser, userObj) => {
+    console.log('manager search: ', userObj);
+    // const allBookings = userObj.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings, user);
+    // console.log(allBookings);
+
+    $('#manager-search-container').append(`
+      <p>${user.name}</p>
+
+    `)
+  },
+
   customerAccessPage: (user) => {
     user = new Customer(user);
+    const searchedUserInfo = domUpdates.getSearchedUserInfo(user);
+    const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings, user);
 
-    const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings);
+    const presentBookings = user.getPresentBookings(allCustomerRoomBookings, hotelObj.bookings, user);
 
-    const presentBookings = user.getPresentBookings(allCustomerRoomBookings, hotelObj.bookings);
+    const pastBookings = user.getPastBookings(allCustomerRoomBookings, hotelObj.bookings, user);
 
-    const pastBookings = user.getPastBookings(allCustomerRoomBookings, hotelObj.bookings);
-
-    const futureBookings = user.getFutureBookings(allCustomerRoomBookings, hotelObj.bookings);
+    const futureBookings = user.getFutureBookings(allCustomerRoomBookings, hotelObj.bookings, user);
 
     const totalSpent = user.getTotalSpentOnBookings(allCustomerRoomBookings);
 
@@ -184,8 +209,6 @@ const domUpdates = {
       });
 
       $('.room-type-button').click((e) => {
-        // let splitID = e.target.id.split(' ');
-        // let jointID = splitID.join(' ');
         let uniqueID = e.target.id;
         let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
         $('#main-available-rooms').html(``);
