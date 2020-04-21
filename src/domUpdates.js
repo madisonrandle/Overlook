@@ -335,6 +335,9 @@ const domUpdates = {
             <button class="book-room" id=${room.number}>Book Room</button>
           </div>
         `)
+        $(".book-room").click((e) => {
+          user.postBooking(e, e.target.id);
+        })
       });
 
       $('.room-type-button').click((e) => {
