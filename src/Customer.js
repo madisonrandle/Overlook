@@ -15,10 +15,10 @@ class Customer {
 
   }
 
-  getAllRoomBookings(rooms, bookings) {
+  getAllRoomBookings(rooms, bookings, user) {
     return bookings.reduce((acc, booking) => {
       rooms.forEach(room => {
-        if (room.number === booking.roomNumber && booking.userID === this.id) {
+        if (room.number === booking.roomNumber && booking.userID === user.id) {
           acc.push(room);
         }
       })
@@ -26,10 +26,10 @@ class Customer {
     }, []);
   }
 
-  getPresentBookings(allUserRoomBookings, bookings) {
+  getPresentBookings(allUserRoomBookings, bookings, user) {
     return bookings.reduce((acc, booking) => {
       allUserRoomBookings.forEach(roomBooking => {
-        if (this.id === booking.userID && booking.date === this.todaysDate && booking.roomNumber === roomBooking.number) {
+        if (user.id === booking.userID && booking.date === this.todaysDate && booking.roomNumber === roomBooking.number) {
           let roomObj = {};
           roomObj[booking.date] = roomBooking;
           acc.push(roomObj);
@@ -39,10 +39,10 @@ class Customer {
     }, []);
   }
 
-  getPastBookings(allUserRoomBookings, bookings) {
+  getPastBookings(allUserRoomBookings, bookings, user) {
     let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
     let pastBookings = sortedBookings.filter(booking => new Date(booking.date) < new Date(this.todaysDate));
-    let usersPastBookings = pastBookings.filter(pastBooking => this.id === pastBooking.userID);
+    let usersPastBookings = pastBookings.filter(pastBooking => user.id === pastBooking.userID);
 
     return allUserRoomBookings.reduce((acc, roomBooking) => {
       acc[roomBooking.number] = [];
@@ -55,10 +55,10 @@ class Customer {
     }, {});
   }
 
-  getFutureBookings(allUserRoomBookings, bookings) {
+  getFutureBookings(allUserRoomBookings, bookings, user) {
     let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
     let futureBookings = sortedBookings.filter(booking => new Date(booking.date) > new Date(this.todaysDate));
-    let usersFutureBookings = futureBookings.filter(futureBooking => this.id === futureBooking.userID);
+    let usersFutureBookings = futureBookings.filter(futureBooking => user.id === futureBooking.userID);
 
     return allUserRoomBookings.reduce((acc, roomBooking) => {
       acc[roomBooking.number] = [];
