@@ -34,33 +34,26 @@ const domUpdates = {
       name: 'Billy Joe'
     });
 
-    const availableRoomsToday = user.getAvailableRoomsToday(hotelObj.rooms, hotelObj.bookings).length;
-
+    const availableRoomsToday = user.getAvailableRoomsToday(hotelObj.rooms, hotelObj.bookings, user.todaysDate).length;
     const occupiedRoomsToday = user.getPercentageOfRoomsOccupiedToday(hotelObj.rooms);
-
     const totalRevenueToday = user.getTotalRevenueToday(hotelObj.rooms, hotelObj.bookings);
-
 
     $('body').html(`
       <section id="user-access-page">
         <header id="header"></header>
         <main id="main">
-
           <section id="occupied-rooms">
             <h2>Occupied</h2>
             <p id="percent-occupied-rooms">${occupiedRoomsToday}%</p>
           </section>
-
           <section id="available-rooms">
             <h2>Available</h2>
             <p id="num-available-rooms">${availableRoomsToday} rooms</p>
           </section>
-
           <section id="revenue-today">
             <h2>Total Revenue</h2>
             <p id="num-revenue-today">${totalRevenueToday}</p>
           </section>
-
         </main>
       </section>
     `);
@@ -80,15 +73,12 @@ const domUpdates = {
 
     const totalSpent = user.getTotalSpentOnBookings(allCustomerRoomBookings);
 
-
-
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
         </header>
         <main id="main-customer-page">
           <section id="total-spent">
-
           </section>
           <section id="today-bookings">
             <h2>Today</h2>
@@ -108,10 +98,16 @@ const domUpdates = {
         Object.keys(presentBooking).forEach(date => {
           let formattedDate = moment(`${date}`, 'YYYY/MM/DD').format('l');
           $('#today-bookings').append(`
-            <p>${formattedDate}</p>
-            <p>${presentBooking[date].roomType}</p>
-            <p>${presentBooking[date].numBeds} ${presentBooking[date].bedSize}</p>
-            <p>${presentBooking[date].costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+            <div style="border: 1px solid black;">
+
+              <p style="padding: 1rem;">${formattedDate}</p>
+
+              <p style="padding: 1rem;">${presentBooking[date].roomType}</p>
+              <p style="padding: 1rem;">${presentBooking[date].numBeds} ${presentBooking[date].bedSize}</p>
+
+              <p style="padding: 1rem;">${presentBooking[date].costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+
+            </div>
           `);
         });
       });
@@ -150,8 +146,68 @@ const domUpdates = {
 
     $('#total-spent').append(`
       <p>Total Amount Spent: ${totalSpent}</p>
+      <form>
+        <input type="date" id="booking-date-input">
+        <button type='submit' id='booking-form-submit-button'>select date</button>
+      </form>
     `);
+
+    $('#booking-form-submit-button').click((e) => {
+      e.preventDefault(e);
+      user.getAvailableRooms(hotelObj.rooms, hotelObj.bookings);
+
+      $('body').html(`
+        <section id="user-access-page" class="availble-rooms-page">
+          <header id="header">
+          </header>
+          <main id="main-available-rooms">
+            <nav id="filter-room-by-type">
+              <button class="room-type-button" id="residential suite">Residential Suite</button>
+              <button class="room-type-button" id="suite">Suite</button>
+              <button class="room-type-button" id="single room">Single Room</button>
+              <button class="room-type-button" id="junior suite">Junior Suite</button>
+            </nav>
+          </main>
+        </section>
+      `);
+
+      user.availableRooms.forEach(room => {
+        $('#main-available-rooms').append(`
+          <div style="border: 1px solid black;">
+            <p style="padding: 1rem;">${room.number}</p>
+            <p style="padding: 1rem;">${room.roomType}</p>
+            <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+            <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+            <button class="book-room" id=${room.number}>Book Room</button>
+          </div>
+        `)
+      });
+
+      $('.room-type-button').click((e) => {
+        // let splitID = e.target.id.split(' ');
+        // let jointID = splitID.join(' ');
+        let uniqueID = e.target.id;
+        let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
+        $('#main-available-rooms').html(``);
+        filteredRoomsByType.forEach(room => {
+          $('#main-available-rooms').append(`
+            <div style="border: 1px solid black;">
+              <p style="padding: 1rem;">${room.number}</p>
+              <p style="padding: 1rem;">${room.roomType}</p>
+              <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+              <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+              <button class="book-room" id=${room.number}>Book Room</button>
+            </div>
+          `)
+        });
+      });
+
+      $(".book-room").click((e) => {
+        user.postBooking(e.target.id);
+      })
+    });
   },
+
 
   invalidLogin: () => {
     console.log('username or password is incorrect');

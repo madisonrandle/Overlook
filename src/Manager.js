@@ -9,10 +9,10 @@ class Manager extends Customer {
       this.roomsBookedToday = [];
   };
 
-  getAvailableRoomsToday(rooms, bookings) {
+  getAvailableRoomsToday(rooms, bookings, date) {
     rooms.forEach(room => {
       bookings.forEach(booking => {
-        if (booking.roomNumber === room.number && booking.date === this.todaysDate) {
+        if (booking.roomNumber === room.number && booking.date === date) {
           this.roomsBookedToday.push(room);
         };
       });
@@ -25,6 +25,7 @@ class Manager extends Customer {
         }
       })
     });
+    
     return this.availableRoomsToday;
   };
 

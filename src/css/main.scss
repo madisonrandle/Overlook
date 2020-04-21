@@ -39,6 +39,13 @@ body {
   padding: $page-padding;
 }
 
+#main-available-rooms {
+  @include scroll;
+  border: 2px solid blue;
+  grid-area: main;
+  padding: $page-padding;
+}
+
 #main-customer-page {
   @include scroll;
   border: 2px solid blue;
