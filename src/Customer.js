@@ -99,7 +99,7 @@ class Customer {
     return availableRooms.filter(room => room.roomType === id);
   }
 
-  postBooking(roomNumber) {
+  postBooking(e, roomNumber) {
     let options =  {
         method: 'POST',
         headers: {
@@ -113,6 +113,9 @@ class Customer {
       }
 
     fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
+
+    e.target.closest('div').remove();
+
   }
 
 }
