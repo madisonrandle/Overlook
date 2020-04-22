@@ -8,13 +8,13 @@ const domUpdates = {
   loadLoginPage: (hotel) => {
     hotelObj = hotel;
     $('body').html(`
-      <section>
+       <section id="login-container">
         <form id="login-form">
           <div>
-            <input id="username-input" type="text" value="manager" required>
+            <input id="username-input" type="text" value="username" onfocus="this.value=''" required>
           </div>
           <div>
-            <input id="password-input" type="text" value="overlook2020" required>
+            <input id="password-input" type="text" value="password" onfocus="this.value='', this.type='password'" required>
           </div>
           <div>
             <button id="login-button" type="submit">login</button>
@@ -37,11 +37,12 @@ const domUpdates = {
     const availableRoomsToday = user.getAvailableRoomsToday(hotelObj.rooms, hotelObj.bookings, user.todaysDate).length;
     const occupiedRoomsToday = user.getPercentageOfRoomsOccupiedToday(hotelObj.rooms);
     const totalRevenueToday = user.getTotalRevenueToday(hotelObj.rooms, hotelObj.bookings);
-
     $('body').html(`
       <section id="user-access-page">
-        <header id="header"></header>
-        <main id="main">
+        <header id="header">
+          <h1>Overlook</h1>
+        </header>
+        <main id="main-customer-page">
         <section id="manager-search-container"></section>
           <section id="occupied-rooms">
             <h2>Occupied</h2>
@@ -60,7 +61,7 @@ const domUpdates = {
     `);
 
     $('#manager-search-container').append(`
-      <input type="text" id="manager-search-input" value="Michel Kunze">
+      <input type="text" id="manager-search-input" value="Rocio Schuster">
       <button type='submit' id='manager-search-submit-button'>search customer</button>
     `);
 
@@ -80,6 +81,7 @@ const domUpdates = {
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
+          <h1>Overlook</h1>
         </header>
         <main id="main-customer-page">
           <section id="manager-search-container">
@@ -114,6 +116,7 @@ console.log(user.availableRooms);
       $('body').html(`
         <section id="user-access-page" class="availble-rooms-page">
           <header id="header">
+            <h1>Overlook</h1>
           </header>
           <main id="main-available-rooms">
             <nav id="filter-room-by-type">
@@ -161,9 +164,6 @@ console.log(user.availableRooms);
       $(".book-room").click((e) => {
         searchedUser.postBooking(e);
       })
-
-
-
     });
 
     if (presentBookings.length) {
@@ -241,6 +241,7 @@ console.log(user.availableRooms);
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
+          <h1>Overlook</h1>
         </header>
         <main id="main-customer-page">
           <section id="total-spent">
@@ -319,6 +320,7 @@ console.log(user.availableRooms);
         $('body').html(`
           <section id="user-access-page" class="availble-rooms-page">
             <header id="header">
+              <h1>Overlook</h1>
             </header>
             <main id="main-available-rooms">
               <nav id="filter-room-by-type">

@@ -4,16 +4,34 @@
 
 * {
   box-sizing: border-box;
-  // font-family: 'Spartan', sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
-  border: 3px solid yellow;
+  background-image: url("../images/overlook-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   height: auto;
 }
 
 // PAGE LAYOUT
+#login-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 30rem;
+}
+
+#login-form {
+  @include opacity;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: $page-padding;
+  width: 20rem;
+}
+
 #user-access-page {
   display: grid;
   grid-template-areas:
@@ -23,40 +41,31 @@ body {
 }
 
 #header{
-  border: 2px solid red;
+  @include opacity;
+  align-items: center;
+  display: flex;
+  font-size: 3rem;
   grid-area: header;
+  justify-content: center;
   padding: $page-padding;
 }
 
-// #main {
-//   @include scroll;
-//   border: 2px solid blue;
-//   display: grid;
-//   grid-template-areas:
-//   "left middle right";
-//   grid-area: main;
-//   grid-gap: 1rem;
-//   padding: $page-padding;
-// }
-
 #main-available-rooms {
   @include scroll;
-  border: 2px solid blue;
+  @include opacity;
   grid-area: main;
   padding: $page-padding;
 }
 
-#main-customer-page,
-#main {
+#main-customer-page {
   @include scroll;
-  border: 2px solid blue;
   display: grid;
   grid-template-areas:
   "top top top"
   "left middle right";
   grid-gap: 1rem;
+  padding: $page-padding;
 }
-
 
 #total-spent,
 #manager-search-container {
@@ -76,28 +85,24 @@ body {
 
 #occupied-rooms,
 #today-bookings {
-  border: 2px solid green;
+  @include opacity;
   grid-area: left;
 }
 
 #available-rooms,
 #upcoming-bookings {
-  border: 2px solid purple;
+  @include opacity;
   grid-area: middle;
 }
 
 #revenue-today,
 #past-bookings {
-  border: 2px solid pink;
+  @include opacity;
   grid-area: right;
 }
 
 h2 {
   @include sub-header;
-}
-
-button:hover {
-  @include button-hover;
 }
 
 #num-available-rooms,
@@ -107,5 +112,24 @@ button:hover {
   padding: $page-padding;
 }
 
+// Inputs & Buttons
+input {
+  @include input;
+  margin: $page-margin;
+}
 
+button {
+ @include button;
+ margin: $page-margin;
+}
+
+button:hover {
+  @include button-hover;
+}
+
+// p tags throughout page
+p {
+  font-size: 1.5rem;
+  margin: $page-margin;
+}
 //
