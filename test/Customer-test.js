@@ -1,6 +1,5 @@
 import chai from 'chai';
 import moment from 'moment';
-import $ from 'jquery';
 import Customer from '../src/Customer';
 import usersData from '../src/test-data/users-test-data';
 import bookingsData from '../src/test-data/bookings-test-data';
@@ -14,14 +13,14 @@ let customer;
 describe('Customer', () => {
   beforeEach(() => {
     customer = new Customer(usersData.users[8], false);
-   });
+  });
 
   it('should be a function', () => {
     expect(Customer).to.be.a('function');
-   });
+  });
 
   it('should be an instance of Hotel', () => {
-   expect(customer).to.be.an.instanceof(Customer);
+    expect(customer).to.be.an.instanceof(Customer);
   });
 
   it('should have today\'s date', () => {
@@ -88,15 +87,11 @@ describe('Customer', () => {
   });
 
   it('should find all customer bookings for todays date', () => {
-    let allRoomBookings = customer.getAllRoomBookings(bookingsData.bookings, customer);
-
     expect(customer.getPresentBookings(bookingsData.bookings, customer)).to.be.a('array');
     expect(customer.getPresentBookings(bookingsData.bookings, customer)).to.deep.eql([]);
   });
 
   it('should find all customer bookings prior to todays date', () => {
-    let allRoomBookings = customer.getAllRoomBookings(roomsData.rooms, bookingsData.bookings);
-
     expect(customer.getPastBookings(bookingsData.bookings, customer)).to.deep.eql([
       {
         id: '5fwrgu4i7k55hl6tc',
@@ -140,15 +135,4 @@ describe('Customer', () => {
   it('should find available rooms by room type', () => {
     expect(customer.getRoomByType(customer.availableRooms, customer.id)).to.be.a('array');
   })
-
-
-  // chai.spy.on(customer, 'getAvailableRooms', () => 'all available rooms');
-  //
-  //   it('Should invoke getAvailableRooms', () => {
-  //
-  //     // expect(customer.getAvailableRooms()).to.equal('all available rooms');
-  //   });
-
-
-    // ^^^^^ postBooking();
 });

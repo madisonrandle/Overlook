@@ -76,7 +76,7 @@ const domUpdates = {
   managerCustomerSearchPage: (searchedUser, managerObj) => {
     const allBookings = searchedUser.getAllRoomBookings(hotelObj.bookings, searchedUser);
     const presentBookings = searchedUser.getPresentBookings(hotelObj.bookings, searchedUser);
-    const pastBookings = searchedUser.getPastBookings(hotelObj.bookings, searchedUser);''
+    const pastBookings = searchedUser.getPastBookings(hotelObj.bookings, searchedUser);
     const futureBookings = searchedUser.getFutureBookings(hotelObj.bookings, searchedUser);
     const totalSpent = searchedUser.getTotalSpentOnBookings(allBookings, hotelObj.rooms);
 
@@ -112,7 +112,6 @@ const domUpdates = {
 
     $('#booking-form-submit-button').click((e) => {
       e.preventDefault(e);
-console.log(user.availableRooms);
       searchedUser.getAvailableRooms(hotelObj.rooms, hotelObj.bookings);
 
       $('body').html(`

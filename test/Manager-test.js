@@ -9,14 +9,14 @@ let manager;
 describe('Manager', () => {
   beforeEach(() => {
     manager = new Manager(usersData, roomsData, bookingsData);
-   });
+  });
 
   it('should be a function', () => {
     expect(Manager).to.be.a('function');
-   });
+  });
 
   it('should be an instance of Hotel', () => {
-   expect(manager).to.be.an.instanceof(Manager);
+    expect(manager).to.be.an.instanceof(Manager);
   });
 
   it('should accept an array of all available rooms', () => {
