@@ -8,7 +8,7 @@ const domUpdates = {
   loadLoginPage: (hotel) => {
     hotelObj = hotel;
     $('body').html(`
-       <section>
+       <section id="login-container">
         <form id="login-form">
           <div>
             <input id="username-input" type="text" value="username" onfocus="this.value=''" required>
@@ -39,7 +39,9 @@ const domUpdates = {
     const totalRevenueToday = user.getTotalRevenueToday(hotelObj.rooms, hotelObj.bookings);
     $('body').html(`
       <section id="user-access-page">
-        <header id="header"></header>
+        <header id="header">
+          <h1>Overlook</h1>
+        </header>
         <main id="main-customer-page">
         <section id="manager-search-container"></section>
           <section id="occupied-rooms">
@@ -79,6 +81,7 @@ const domUpdates = {
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
+          <h1>Overlook</h1>
         </header>
         <main id="main-customer-page">
           <section id="manager-search-container">
@@ -113,6 +116,7 @@ console.log(user.availableRooms);
       $('body').html(`
         <section id="user-access-page" class="availble-rooms-page">
           <header id="header">
+            <h1>Overlook</h1>
           </header>
           <main id="main-available-rooms">
             <nav id="filter-room-by-type">
@@ -160,9 +164,6 @@ console.log(user.availableRooms);
       $(".book-room").click((e) => {
         searchedUser.postBooking(e);
       })
-
-
-
     });
 
     if (presentBookings.length) {
@@ -240,6 +241,7 @@ console.log(user.availableRooms);
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
+          <h1>Overlook</h1>
         </header>
         <main id="main-customer-page">
           <section id="total-spent">
@@ -318,6 +320,7 @@ console.log(user.availableRooms);
         $('body').html(`
           <section id="user-access-page" class="availble-rooms-page">
             <header id="header">
+              <h1>Overlook</h1>
             </header>
             <main id="main-available-rooms">
               <nav id="filter-room-by-type">

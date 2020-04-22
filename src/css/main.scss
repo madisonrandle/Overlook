@@ -16,6 +16,23 @@ body {
 }
 
 // PAGE LAYOUT
+#login-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 30rem;
+}
+
+#login-form {
+  @include opacity;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: $page-padding;
+  width: 20rem;
+}
+
 #user-access-page {
   display: grid;
   grid-template-areas:
@@ -26,7 +43,11 @@ body {
 
 #header{
   @include opacity;
+  align-items: center;
+  display: flex;
+  font-size: 3rem;
   grid-area: header;
+  justify-content: center;
   padding: $page-padding;
 }
 
@@ -109,7 +130,7 @@ button:hover {
 
 // p tags throughout page
 p {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: $page-margin;
 }
 //
