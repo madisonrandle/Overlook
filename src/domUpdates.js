@@ -68,7 +68,6 @@ const domUpdates = {
       let searchedUser = $('#manager-search-input').val().toLowerCase();
       user.getSerachedUser(searchedUser, hotelObj.users, user);
     })
-
   },
 
   managerCustomerSearchPage: (searchedUser, managerObj) => {
@@ -78,7 +77,6 @@ const domUpdates = {
     const futureBookings = searchedUser.getFutureBookings(hotelObj.bookings, searchedUser);
     const totalSpent = searchedUser.getTotalSpentOnBookings(allBookings, hotelObj.rooms);
 
-
     $('body').html(`
       <section id="user-access-page">
         <header id="header">
@@ -86,7 +84,6 @@ const domUpdates = {
         <main id="main-customer-page">
           <section id="manager-search-container">
           </section>
-
           <section id="today-bookings">
             <h2>Today</h2>
           </section>
@@ -156,7 +153,6 @@ const domUpdates = {
           </div>
         `);
       });
-
       $('.delete-future-booking-button').click((e) => {
         managerObj.deleteBooking(e, futureBookings);
       })
@@ -168,7 +164,6 @@ const domUpdates = {
       `);
     }
   },
-
 
   customerAccessPage: (user) => {
     user = new Customer(user);
@@ -215,7 +210,6 @@ const domUpdates = {
         </div>
       `);
     }
-
 
     pastBookings.forEach(pastBooking => {
       let formattedDate = moment(`${pastBooking.date}`, 'YYYY/MM/DD').format('l');
@@ -284,16 +278,10 @@ const domUpdates = {
         `)
       });
 
-      // $(".book-room").click((e) => {
-      //   user.postBooking(e);
-      // })
-
       $('.room-type-button').click((e) => {
         let uniqueID = e.target.id;
         let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
-
         $('#main-available-rooms').html(``);
-
         filteredRoomsByType.forEach(room => {
           $('#main-available-rooms').append(`
             <div style="border: 1px solid black;">
@@ -309,21 +297,15 @@ const domUpdates = {
           user.postBooking(e);
         })
       });
-
       $(".book-room").click((e) => {
         user.postBooking(e);
       })
     });
   },
 
-
   invalidLogin: () => {
     console.log('username or password is incorrect');
   },
 }
-
-
-
-
 
 export default domUpdates;

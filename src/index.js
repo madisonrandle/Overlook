@@ -3,7 +3,7 @@ import domUpdates from './domUpdates';
 import Hotel from './Hotel';
 import './css/main.scss';
 
-export const fetchAllData = () => {
+const fetchAllData = () => {
   const urlFragment = 'https://fe-apps.herokuapp.com/api/v1/overlook/1904';
   const usersData = fetchData(`${urlFragment}/users/users`);
   const roomsData = fetchData(`${urlFragment}/rooms/rooms`);

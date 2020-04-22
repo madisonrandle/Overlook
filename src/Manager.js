@@ -2,7 +2,6 @@ import $ from 'jquery';
 import Customer from './Customer';
 import domUpdates from './domUpdates';
 import { fetchData } from './ApiHandler';
-import { fetchAllData } from './index';
 
 class Manager extends Customer {
   constructor(user, todaysDate) {
@@ -39,6 +38,7 @@ class Manager extends Customer {
           totalRevenue += room.costPerNight;
         };
       });
+
       return totalRevenue;
     }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
   };
@@ -54,11 +54,8 @@ class Manager extends Customer {
   };
 
   deleteBooking(e, futureBookings) {
-
     let foundBooking = futureBookings.find(booking => parseInt(e.target.id) === booking.id);
-
     let bookingID = foundBooking.id;
-
     let options =  {
       method: 'DELETE',
       headers: {
@@ -68,13 +65,10 @@ class Manager extends Customer {
         id: bookingID,
       }),
     }
-
     fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
-
+    
     e.target.closest('div').remove();
-
-  }
-
+  };
 };
 
 export default Manager;
