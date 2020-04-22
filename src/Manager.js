@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import Customer from './Customer';
 import domUpdates from './domUpdates';
+import { fetchData } from './ApiHandler';
+import { fetchAllData } from './index';
 
 class Manager extends Customer {
   constructor(user, todaysDate) {
@@ -45,11 +47,32 @@ class Manager extends Customer {
     return Math.round(this.roomsBookedToday.length * 100 / rooms.length);
   };
 
-  getSerachedUser(searchedUser, users) {
+  getSerachedUser(searchedUser, users, managerObj) {
     let foundUser = users.find(user => searchedUser === user.name.toLowerCase());
     let customer = new Customer(foundUser);
-    domUpdates.managerCustomerSearchPage(customer);
+    domUpdates.managerCustomerSearchPage(customer, managerObj);
   };
+
+  deleteBooking(e, futureBookings) {
+    let foundBooking = futureBookings.find(booking => parseInt(e.target.id) === booking.id);
+    let bookingID = foundBooking.id;
+
+    console.log(bookingID);
+    let options =  {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: bookingID,
+      }),
+    }
+
+    fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
+
+    e.target.closest('div').remove();
+
+  }
 
 };
 

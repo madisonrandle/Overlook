@@ -1,9 +1,9 @@
-import {fetchData} from './ApiHandler';
+import { fetchData } from './ApiHandler';
 import domUpdates from './domUpdates';
 import Hotel from './Hotel';
 import './css/main.scss';
 
-const fetchAllData = () => {
+export const fetchAllData = () => {
   const urlFragment = 'https://fe-apps.herokuapp.com/api/v1/overlook/1904';
   const usersData = fetchData(`${urlFragment}/users/users`);
   const roomsData = fetchData(`${urlFragment}/rooms/rooms`);

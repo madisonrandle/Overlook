@@ -66,12 +66,12 @@ const domUpdates = {
 
     $('#manager-search-submit-button').click((e) => {
       let searchedUser = $('#manager-search-input').val().toLowerCase();
-      user.getSerachedUser(searchedUser, hotelObj.users);
+      user.getSerachedUser(searchedUser, hotelObj.users, user);
     })
 
   },
 
-  managerCustomerSearchPage: (searchedUser) => {
+  managerCustomerSearchPage: (searchedUser, managerObj) => {
     const allBookings = searchedUser.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings, searchedUser);
     const presentBookings = searchedUser.getPresentBookings(allBookings, hotelObj.bookings, searchedUser);
     const pastBookings = searchedUser.getPastBookings(allBookings, hotelObj.bookings, searchedUser);
@@ -144,7 +144,6 @@ const domUpdates = {
       return acc;
     }, []);
 
-    // get date listed with each booking
     pastBookingRooms.forEach(pastBooking => {
       $('#past-bookings').append(`
         <div style="border: 1px solid black;">
@@ -155,35 +154,25 @@ const domUpdates = {
       `);
     });
 
-    let futureBookingRooms = Object.keys(futureBookings).reduce((acc, futureBooking) => {
-      allBookings.forEach(customerRoomBooking => {
-        if (parseInt(futureBooking) === customerRoomBooking.number) {
-          futureBookings[futureBooking].forEach(el => {
-            if (!acc.includes(customerRoomBooking)) {
-              acc.push(customerRoomBooking)
-            }
-          })
-        }
-      })
-      return acc;
-    }, []);
-
-    // get date listed with each booking
-    if (futureBookingRooms.length) {
-      futureBookingRooms.forEach(futureBooking => {
+    if (futureBookings.length) {
+      futureBookings.forEach((futureBooking) => {
+        let formattedDate = moment(`${futureBooking.date}`).format('l');
         $('#upcoming-bookings').append(`
           <div style="border: 1px solid black;">
-            <p style="padding: 1rem;">${futureBooking.roomType}</p>
-            <p style="padding: 1rem;">${futureBooking.numBeds} ${futureBooking.bedSize}</p>
-            <p style="padding: 1rem;">${futureBooking.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-            <button id="delete-future-booking-button">delete booking</button>
+            <p style="padding: 1rem;">${formattedDate}</p>
+            <p style="padding: 1rem;">${futureBooking.roomNumber}</p>
+            <button class="delete-future-booking-button" id=${futureBooking.id}>delete booking</button>
           </div>
         `);
       });
+
+      $('.delete-future-booking-button').click((e) => {
+        managerObj.deleteBooking(e, futureBookings);
+      })
     } else {
       $('#upcoming-bookings').append(`
         <div>
-          <p>${futureBookingRooms.length} future reservations for ${searchedUser.name}.</p>
+          <p>${futureBookings.length} future reservations for ${searchedUser.name}.</p>
         </div>
       `);
     }
@@ -192,15 +181,11 @@ const domUpdates = {
 
   customerAccessPage: (user) => {
     user = new Customer(user);
-    const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings, user);
-
-    const presentBookings = user.getPresentBookings(allCustomerRoomBookings, hotelObj.bookings, user);
-
-    const pastBookings = user.getPastBookings(allCustomerRoomBookings, hotelObj.bookings, user);
-
-    const futureBookings = user.getFutureBookings(allCustomerRoomBookings, hotelObj.bookings, user);
-
-    const totalSpent = user.getTotalSpentOnBookings(allCustomerRoomBookings);
+    const allCustomerRoomBookings = user.getAllRoomBookings(hotelObj.bookings, user);
+    const presentBookings = user.getPresentBookings(hotelObj.bookings, user);
+    const pastBookings = user.getPastBookings(hotelObj.bookings, user);
+    const futureBookings = user.getFutureBookings(hotelObj.bookings, user);
+    const totalSpent = user.getTotalSpentOnBookings(allCustomerRoomBookings, hotelObj.rooms);
 
     $('body').html(`
       <section id="user-access-page">
@@ -224,21 +209,13 @@ const domUpdates = {
 
     if (presentBookings.length) {
       presentBookings.forEach(presentBooking => {
-        Object.keys(presentBooking).forEach(date => {
-          let formattedDate = moment(`${date}`, 'YYYY/MM/DD').format('l');
-          $('#today-bookings').append(`
-            <div style="border: 1px solid black;">
-
-              <p style="padding: 1rem;">${formattedDate}</p>
-
-              <p style="padding: 1rem;">${presentBooking[date].roomType}</p>
-              <p style="padding: 1rem;">${presentBooking[date].numBeds} ${presentBooking[date].bedSize}</p>
-
-              <p style="padding: 1rem;">${presentBooking[date].costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-
-            </div>
-          `);
-        });
+        let formattedDate = moment(`${presentBooking.date}`, 'YYYY/MM/DD').format('l');
+        $('#today-bookings').append(`
+          <div style="border: 1px solid black;">
+            <p style="padding: 1rem;">Date: ${formattedDate}</p>
+            <p style="padding: 1rem;">Room Number: ${presentBooking.roomNumber}</p>
+          </div>
+        `);
       });
     } else {
       $('#today-bookings').append(`
@@ -249,26 +226,12 @@ const domUpdates = {
     }
 
 
-    let pastBookingRooms = Object.keys(pastBookings).reduce((acc, booking) => {
-      allCustomerRoomBookings.forEach(customerRoomBooking => {
-        if (parseInt(booking) === customerRoomBooking.number) {
-          pastBookings[booking].forEach(el => {
-            if (!acc.includes(customerRoomBooking)) {
-              acc.push(customerRoomBooking)
-            }
-          })
-        }
-      })
-      return acc;
-    }, []);
-
-    // get date listed with each booking
-    pastBookingRooms.forEach(pastBooking => {
+    pastBookings.forEach(pastBooking => {
+      let formattedDate = moment(`${pastBooking.date}`, 'YYYY/MM/DD').format('l');
       $('#past-bookings').append(`
         <div style="border: 1px solid black;">
-          <p style="padding: 1rem;">${pastBooking.roomType}</p>
-          <p style="padding: 1rem;">${pastBooking.numBeds} ${pastBooking.bedSize}</p>
-          <p style="padding: 1rem;">${pastBooking.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+          <p style="padding: 1rem;">Date: ${formattedDate}</p>
+          <p style="padding: 1rem;">Room Number: ${pastBooking.roomNumber}</p>
         </div>
       `);
     });
@@ -281,30 +244,23 @@ const domUpdates = {
       </form>
     `);
 
-
-    let futureBookingRooms = Object.keys(futureBookings).reduce((acc, futureBooking) => {
-      allCustomerRoomBookings.forEach(customerRoomBooking => {
-        if (parseInt(futureBooking) === customerRoomBooking.number) {
-          futureBookings[futureBooking].forEach(el => {
-            if (!acc.includes(customerRoomBooking)) {
-              acc.push(customerRoomBooking)
-            }
-          })
-        }
-      })
-      return acc;
-    }, []);
-
-    // get date listed with each booking
-    futureBookingRooms.forEach(futureBooking => {
+    if (futureBookings.length) {
+      futureBookings.forEach(futureBooking => {
+        let formattedDate = moment(`${futureBooking.date}`, 'YYYY/MM/DD').format('l');
+        $('#upcoming-bookings').append(`
+          <div style="border: 1px solid black;">
+            <p style="padding: 1rem;">Date: ${formattedDate}</p>
+            <p style="padding: 1rem;">Room Number: ${futureBooking.roomNumber}</p>
+          </div>
+        `);
+      });
+    } else {
       $('#upcoming-bookings').append(`
-        <div style="border: 1px solid black;">
-          <p style="padding: 1rem;">${futureBooking.roomType}</p>
-          <p style="padding: 1rem;">${futureBooking.numBeds} ${futureBooking.bedSize}</p>
-          <p style="padding: 1rem;">${futureBooking.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+        <div>
+          <p>You have no future reservations.</p>
         </div>
       `);
-    });
+    }
 
     $('#booking-form-submit-button').click((e) => {
       e.preventDefault(e);
@@ -336,7 +292,7 @@ const domUpdates = {
           </div>
         `)
         $(".book-room").click((e) => {
-          user.postBooking(e, e.target.id);
+          user.postBooking(e);
         })
       });
 
@@ -358,7 +314,7 @@ const domUpdates = {
       });
 
       $(".book-room").click((e) => {
-        user.postBooking(e, e.target.id);
+        user.postBooking(e);
       })
     });
   },

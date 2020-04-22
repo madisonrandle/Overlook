@@ -15,65 +15,32 @@ class Customer {
 
   }
 
-  getAllRoomBookings(rooms, bookings, user) {
-    return bookings.reduce((acc, booking) => {
-      rooms.forEach(room => {
-        if (room.number === booking.roomNumber && booking.userID === user.id) {
-          acc.push(room);
+  getAllRoomBookings(bookings, user) {
+    return bookings.filter(booking => booking.userID === user.id)
+  }
+
+  getPresentBookings(bookings, user) {
+    let presentBookings = bookings.filter(booking => booking.date === this.todaysDate);
+    return presentBookings.filter(presentBooking => user.id === presentBooking.userID)
+  }
+
+  getPastBookings(bookings, user) {
+    let pastBookings = bookings.filter(booking => new Date(booking.date) < new Date(this.todaysDate));
+    return pastBookings.filter(pastBooking => user.id === pastBooking.userID);
+  }
+
+  getFutureBookings(bookings, user) {
+    let futureBookings = bookings.filter(booking => new Date(booking.date) > new Date(this.todaysDate));
+    return futureBookings.filter(futureBooking => user.id === futureBooking.userID);
+  }
+
+  getTotalSpentOnBookings(allBookings, roomsData) {
+    return allBookings.reduce((acc, booking) => {
+      roomsData.forEach(room => {
+        if (room.number === booking.roomNumber) {
+          acc += room.costPerNight;
         }
       })
-      return acc;
-    }, []);
-  }
-
-  getPresentBookings(allUserRoomBookings, bookings, user) {
-    return bookings.reduce((acc, booking) => {
-      allUserRoomBookings.forEach(roomBooking => {
-        if (user.id === booking.userID && booking.date === this.todaysDate && booking.roomNumber === roomBooking.number) {
-          let roomObj = {};
-          roomObj[booking.date] = roomBooking;
-          acc.push(roomObj);
-        }
-      })
-      return acc;
-    }, []);
-  }
-
-  getPastBookings(allUserRoomBookings, bookings, user) {
-    let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-    let pastBookings = sortedBookings.filter(booking => new Date(booking.date) < new Date(this.todaysDate));
-    let usersPastBookings = pastBookings.filter(pastBooking => user.id === pastBooking.userID);
-
-    return allUserRoomBookings.reduce((acc, roomBooking) => {
-      acc[roomBooking.number] = [];
-        usersPastBookings.forEach(userPastBooking => {
-          if (userPastBooking.roomNumber === roomBooking.number) {
-            acc[roomBooking.number].push(userPastBooking);
-          }
-        });
-      return acc;
-    }, {});
-  }
-
-  getFutureBookings(allUserRoomBookings, bookings, user) {
-    let sortedBookings = bookings.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-    let futureBookings = sortedBookings.filter(booking => new Date(booking.date) > new Date(this.todaysDate));
-    let usersFutureBookings = futureBookings.filter(futureBooking => user.id === futureBooking.userID);
-
-    return allUserRoomBookings.reduce((acc, roomBooking) => {
-      acc[roomBooking.number] = [];
-        usersFutureBookings.forEach(usersFutureBooking => {
-          if (usersFutureBooking.roomNumber === roomBooking.number) {
-            acc[roomBooking.number].push(usersFutureBooking);
-          }
-        });
-      return acc;
-    }, {});
-  }
-
-  getTotalSpentOnBookings(allUserRoomBookings) {
-    return allUserRoomBookings.reduce((acc, room) => {
-      acc += room.costPerNight;
       return acc;
     }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
   }
@@ -99,18 +66,18 @@ class Customer {
     return availableRooms.filter(room => room.roomType === id);
   }
 
-  postBooking(e, roomNumber) {
+  postBooking(e) {
     let options =  {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "userID": this.id,
-          "date": this.bookingDate,
-          "roomNumber": parseInt(roomNumber)
-        }),
-      }
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "userID": this.id,
+        "date": this.bookingDate,
+        "roomNumber": parseInt(e.target.id)
+      }),
+    }
 
     fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
 
