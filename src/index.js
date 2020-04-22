@@ -1,4 +1,4 @@
-import {fetchData} from './ApiHandler';
+import { fetchData } from './ApiHandler';
 import domUpdates from './domUpdates';
 import Hotel from './Hotel';
 import './css/main.scss';
