@@ -346,27 +346,34 @@ console.log(user.availableRooms);
         $('.room-type-button').click((e) => {
           let uniqueID = e.target.id;
           let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
-          $('#main-available-rooms').html(``);
-          filteredRoomsByType.forEach(room => {
-            $('#main-available-rooms').append(`
-              <div style="border: 1px solid black;">
-                <p style="padding: 1rem;">${room.number}</p>
-                <p style="padding: 1rem;">${room.roomType}</p>
-                <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
-                <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-                <button class="book-filtered-room" id=${room.number}>Book Room</button>
-              </div>
-            `)
-          });
-          $(".book-filtered-room").click((e) => {
-            user.postBooking(e);
-          })
+
+          if (filteredRoomsByType.length) {
+            $('#main-available-rooms').html(``);
+
+            filteredRoomsByType.forEach(room => {
+              $('#main-available-rooms').append(`
+                <div style="border: 1px solid black;">
+                  <p style="padding: 1rem;">${room.number}</p>
+                  <p style="padding: 1rem;">${room.roomType}</p>
+                  <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+                  <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+                  <button class="book-filtered-room" id=${room.number}>Book Room</button>
+                </div>
+              `)
+            });
+            $(".book-filtered-room").click((e) => {
+              user.postBooking(e);
+            });
+
+          } else {
+            window.alert('Unfortunately there are no availble reservations on the selected date for the selected room type.')
+          }
         });
         $(".book-room").click((e) => {
           user.postBooking(e);
         })
       } else {
-        window.alert('Unfortunately there are no availble reservations on the selected date')
+        window.alert('Unfortunately there are no availble reservations on the selected date.')
       }
 
     });
