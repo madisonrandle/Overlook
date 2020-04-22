@@ -73,13 +73,9 @@ const domUpdates = {
 
   managerCustomerSearchPage: (searchedUser, managerObj) => {
     const allBookings = searchedUser.getAllRoomBookings(hotelObj.bookings, searchedUser);
-  console.log('allBookings', allBookings);
     const presentBookings = searchedUser.getPresentBookings(hotelObj.bookings, searchedUser);
-  console.log('presentBookings', presentBookings);
     const pastBookings = searchedUser.getPastBookings(hotelObj.bookings, searchedUser);''
-  console.log('pastBookings', pastBookings);
     const futureBookings = searchedUser.getFutureBookings(hotelObj.bookings, searchedUser);
-  console.log('futureBookings', futureBookings);
     const totalSpent = searchedUser.getTotalSpentOnBookings(allBookings, hotelObj.rooms);
 
 
@@ -116,8 +112,12 @@ const domUpdates = {
           <div style="border: 1px solid black;">
             <p style="padding: 1rem;">Date: ${formattedDate}</p>
             <p style="padding: 1rem;">Room Number: ${presentBooking.roomNumber}</p>
+            <button class="delete-future-booking-button" id=${presentBooking.id}>delete booking</button>
           </div>
         `);
+      });
+      $('.delete-future-booking-button').click((e) => {
+        managerObj.deleteBooking(e, presentBookings);
       });
     } else {
       $('#today-bookings').append(`

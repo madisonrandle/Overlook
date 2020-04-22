@@ -54,23 +54,24 @@ class Manager extends Customer {
   };
 
   deleteBooking(e, futureBookings) {
-    console.log('here');
-    // let foundBooking = futureBookings.find(booking => parseInt(e.target.id) === booking.id);
-    // let bookingID = foundBooking.id;
-    //
-    // let options =  {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     id: bookingID,
-    //   }),
-    // }
-    //
-    // fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
-    //
-    // e.target.closest('div').remove();
+
+    let foundBooking = futureBookings.find(booking => parseInt(e.target.id) === booking.id);
+
+    let bookingID = foundBooking.id;
+
+    let options =  {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: bookingID,
+      }),
+    }
+
+    fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
+
+    e.target.closest('div').remove();
 
   }
 
