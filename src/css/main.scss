@@ -9,7 +9,6 @@
 }
 
 body {
-  border: 3px solid yellow;
   height: auto;
 }
 
@@ -96,10 +95,6 @@ h2 {
   @include sub-header;
 }
 
-button:hover {
-  @include button-hover;
-}
-
 #num-available-rooms,
 #percent-occupied-rooms,
 #num-revenue-today {
@@ -107,5 +102,19 @@ button:hover {
   padding: $page-padding;
 }
 
+// Inputs & Buttons
 
+input {
+  @include input;
+  margin: $page-margin;
+}
+
+button {
+ @include button;
+ margin: $page-margin;
+}
+
+button:hover {
+  @include button-hover;
+}
 //

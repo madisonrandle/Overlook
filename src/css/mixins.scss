@@ -10,7 +10,19 @@
   scroll-behavior: smooth;
 }
 
+@mixin button {
+  font-size: 1rem;
+  padding: .5rem;
+  width: 8rem;
+}
+
 @mixin button-hover {
   cursor: pointer;
 }
+
+@mixin input {
+  font-size: 1rem;
+  padding: .5rem;
+}
+
 //
