@@ -67,6 +67,7 @@ class Customer {
   }
 
   postBooking(e) {
+
     let options =  {
       method: 'POST',
       headers: {

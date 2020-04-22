@@ -72,11 +72,15 @@ const domUpdates = {
   },
 
   managerCustomerSearchPage: (searchedUser, managerObj) => {
-    const allBookings = searchedUser.getAllRoomBookings(hotelObj.rooms, hotelObj.bookings, searchedUser);
-    const presentBookings = searchedUser.getPresentBookings(allBookings, hotelObj.bookings, searchedUser);
-    const pastBookings = searchedUser.getPastBookings(allBookings, hotelObj.bookings, searchedUser);
-    const futureBookings = searchedUser.getFutureBookings(allBookings, hotelObj.bookings, searchedUser);
-    const totalSpent = searchedUser.getTotalSpentOnBookings(allBookings);
+    const allBookings = searchedUser.getAllRoomBookings(hotelObj.bookings, searchedUser);
+  console.log('allBookings', allBookings);
+    const presentBookings = searchedUser.getPresentBookings(hotelObj.bookings, searchedUser);
+  console.log('presentBookings', presentBookings);
+    const pastBookings = searchedUser.getPastBookings(hotelObj.bookings, searchedUser);''
+  console.log('pastBookings', pastBookings);
+    const futureBookings = searchedUser.getFutureBookings(hotelObj.bookings, searchedUser);
+  console.log('futureBookings', futureBookings);
+    const totalSpent = searchedUser.getTotalSpentOnBookings(allBookings, hotelObj.rooms);
 
 
     $('body').html(`
@@ -107,21 +111,13 @@ const domUpdates = {
 
     if (presentBookings.length) {
       presentBookings.forEach(presentBooking => {
-        Object.keys(presentBooking).forEach(date => {
-          let formattedDate = moment(`${date}`, 'YYYY/MM/DD').format('l');
-          $('#today-bookings').append(`
-            <div style="border: 1px solid black;">
-
-              <p style="padding: 1rem;">${formattedDate}</p>
-
-              <p style="padding: 1rem;">${presentBooking[date].roomType}</p>
-              <p style="padding: 1rem;">${presentBooking[date].numBeds} ${presentBooking[date].bedSize}</p>
-
-              <p style="padding: 1rem;">${presentBooking[date].costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-
-            </div>
-          `);
-        });
+        let formattedDate = moment(`${presentBooking.date}`, 'YYYY/MM/DD').format('l');
+        $('#today-bookings').append(`
+          <div style="border: 1px solid black;">
+            <p style="padding: 1rem;">Date: ${formattedDate}</p>
+            <p style="padding: 1rem;">Room Number: ${presentBooking.roomNumber}</p>
+          </div>
+        `);
       });
     } else {
       $('#today-bookings').append(`
@@ -131,32 +127,27 @@ const domUpdates = {
       `);
     }
 
-    let pastBookingRooms = Object.keys(pastBookings).reduce((acc, booking) => {
-      allBookings.forEach(customerRoomBooking => {
-        if (parseInt(booking) === customerRoomBooking.number) {
-          pastBookings[booking].forEach(el => {
-            if (!acc.includes(customerRoomBooking)) {
-              acc.push(customerRoomBooking)
-            }
-          })
-        }
-      })
-      return acc;
-    }, []);
-
-    pastBookingRooms.forEach(pastBooking => {
+    pastBookings.forEach(pastBooking => {
+      let formattedDate = moment(`${pastBooking.date}`, 'YYYY/MM/DD').format('l');
       $('#past-bookings').append(`
         <div style="border: 1px solid black;">
-          <p style="padding: 1rem;">${pastBooking.roomType}</p>
-          <p style="padding: 1rem;">${pastBooking.numBeds} ${pastBooking.bedSize}</p>
-          <p style="padding: 1rem;">${pastBooking.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+          <p style="padding: 1rem;">Date: ${formattedDate}</p>
+          <p style="padding: 1rem;">Room Number: ${pastBooking.roomNumber}</p>
         </div>
       `);
     });
 
+    $('#total-spent').append(`
+      <p>Total Amount Spent: ${totalSpent}</p>
+      <form>
+        <input type="date" id="booking-date-input">
+        <button type='submit' id='booking-form-submit-button'>select date</button>
+      </form>
+    `);
+
     if (futureBookings.length) {
       futureBookings.forEach((futureBooking) => {
-        let formattedDate = moment(`${futureBooking.date}`).format('l');
+        let formattedDate = moment(`${futureBooking.date}`, 'YYYY/MM/DD').format('l');
         $('#upcoming-bookings').append(`
           <div style="border: 1px solid black;">
             <p style="padding: 1rem;">${formattedDate}</p>
@@ -291,15 +282,18 @@ const domUpdates = {
             <button class="book-room" id=${room.number}>Book Room</button>
           </div>
         `)
-        $(".book-room").click((e) => {
-          user.postBooking(e);
-        })
       });
+
+      // $(".book-room").click((e) => {
+      //   user.postBooking(e);
+      // })
 
       $('.room-type-button').click((e) => {
         let uniqueID = e.target.id;
         let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
+
         $('#main-available-rooms').html(``);
+
         filteredRoomsByType.forEach(room => {
           $('#main-available-rooms').append(`
             <div style="border: 1px solid black;">
@@ -307,10 +301,13 @@ const domUpdates = {
               <p style="padding: 1rem;">${room.roomType}</p>
               <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
               <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-              <button class="book-room" id=${room.number}>Book Room</button>
+              <button class="book-filtered-room" id=${room.number}>Book Room</button>
             </div>
           `)
         });
+        $(".book-filtered-room").click((e) => {
+          user.postBooking(e);
+        })
       });
 
       $(".book-room").click((e) => {
