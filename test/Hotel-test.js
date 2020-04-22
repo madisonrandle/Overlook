@@ -1,5 +1,4 @@
 import chai from 'chai';
-import moment from 'moment';
 import Hotel from '../src/Hotel'
 import usersData from '../src/test-data/users-test-data';
 import roomsData from '../src/test-data/rooms-test-data';
