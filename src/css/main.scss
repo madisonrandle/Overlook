@@ -9,6 +9,9 @@
 }
 
 body {
+  background-image: url("../images/overlook-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   height: auto;
 }
 
@@ -24,6 +27,7 @@ body {
 #header{
   border: 2px solid red;
   grid-area: header;
+  opacity: $opacity;
   padding: $page-padding;
 }
 
@@ -103,7 +107,6 @@ h2 {
 }
 
 // Inputs & Buttons
-
 input {
   @include input;
   margin: $page-margin;
