@@ -11,10 +11,12 @@ const domUpdates = {
        <section id="login-container">
         <form id="login-form">
           <div>
-            <input id="username-input" type="text" value="username" onfocus="this.value=''" required>
+            <label for="username">username</label>
+            <input id="username-input" type="text" name="username" required>
           </div>
           <div>
-            <input id="password-input" type="text" value="password" onfocus="this.value='', this.type='password'" required>
+            <label for="password">password</label>
+            <input id="password-input" type="password" name="password" required>
           </div>
           <div>
             <button id="login-button" type="submit">login</button>
