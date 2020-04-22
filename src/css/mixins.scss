@@ -13,7 +13,7 @@
 @mixin button {
   font-size: 1rem;
   padding: .5rem;
-  width: 9rem;
+  width: 11.5rem;
 }
 
 @mixin button-hover {
@@ -23,6 +23,11 @@
 @mixin input {
   font-size: 1rem;
   padding: .5rem;
+}
+
+@mixin opacity {
+  background-color: white;
+  opacity: .8;
 }
 
 //

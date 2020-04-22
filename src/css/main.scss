@@ -25,41 +25,27 @@ body {
 }
 
 #header{
-  border: 2px solid red;
+  @include opacity;
   grid-area: header;
-  opacity: $opacity;
   padding: $page-padding;
 }
 
-// #main {
-//   @include scroll;
-//   border: 2px solid blue;
-//   display: grid;
-//   grid-template-areas:
-//   "left middle right";
-//   grid-area: main;
-//   grid-gap: 1rem;
-//   padding: $page-padding;
-// }
-
 #main-available-rooms {
   @include scroll;
-  border: 2px solid blue;
+  @include opacity;
   grid-area: main;
   padding: $page-padding;
 }
 
-#main-customer-page,
-#main {
+#main-customer-page {
   @include scroll;
-  border: 2px solid blue;
   display: grid;
   grid-template-areas:
   "top top top"
   "left middle right";
   grid-gap: 1rem;
+  padding: $page-padding;
 }
-
 
 #total-spent,
 #manager-search-container {
@@ -79,19 +65,19 @@ body {
 
 #occupied-rooms,
 #today-bookings {
-  border: 2px solid green;
+  @include opacity;
   grid-area: left;
 }
 
 #available-rooms,
 #upcoming-bookings {
-  border: 2px solid purple;
+  @include opacity;
   grid-area: middle;
 }
 
 #revenue-today,
 #past-bookings {
-  border: 2px solid pink;
+  @include opacity;
   grid-area: right;
 }
 
@@ -119,5 +105,11 @@ button {
 
 button:hover {
   @include button-hover;
+}
+
+// p tags throughout page
+p {
+  font-size: 1rem;
+  margin: $page-margin;
 }
 //
