@@ -8,13 +8,13 @@ const domUpdates = {
   loadLoginPage: (hotel) => {
     hotelObj = hotel;
     $('body').html(`
-      <section>
+       <section>
         <form id="login-form">
           <div>
-            <input id="username-input" type="text" value="manager" required>
+            <input id="username-input" type="text" value="username" onfocus="this.value=''" required>
           </div>
           <div>
-            <input id="password-input" type="text" value="overlook2020" required>
+            <input id="password-input" type="text" value="password" onfocus="this.value='', this.type='password'" required>
           </div>
           <div>
             <button id="login-button" type="submit">login</button>
