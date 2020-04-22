@@ -59,7 +59,7 @@ const domUpdates = {
     `);
 
     $('#manager-search-container').append(`
-      <input type="text" id="manager-search-input" value="Michel Kunze">
+      <input type="text" id="manager-search-input" value="Rocio Schuster">
       <button type='submit' id='manager-search-submit-button'>search customer</button>
     `);
 
