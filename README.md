@@ -28,6 +28,6 @@ The project focuses on using the fetch API to GET, POST, and DELETE room, user, 
 ![Search & Book Page](https://i.postimg.cc/X7tcxysc/Screen-Shot-2020-04-22-at-8-29-54-AM.png)
 
 ## Project Next Steps
-In future iterations, I'd like to style out the application more extensively, including animation and overall balanceign of containers and cards.
+In future iterations, I'd like to style out the application more extensively, including animation and overall balancing of containers and cards.
 
 I'd also like to create a test suite using chai spies.
