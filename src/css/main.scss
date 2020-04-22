@@ -37,6 +37,7 @@ body {
   grid-template-areas:
   "header"
   "main";
+  grid-gap: 1rem;
   grid-template-rows: 7rem 40rem;
 }
 
