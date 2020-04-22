@@ -100,7 +100,71 @@ const domUpdates = {
     $('#manager-search-container').append(`
       <p>${searchedUser.name}</p>
       <p>Total Spent: ${totalSpent}</p>
-    `)
+      <form>
+        <input type="date" id="booking-date-input">
+        <button type='submit' id='booking-form-submit-button'>select date</button>
+      </form>
+    `);
+
+    $('#booking-form-submit-button').click((e) => {
+      e.preventDefault(e);
+console.log(user.availableRooms);
+      searchedUser.getAvailableRooms(hotelObj.rooms, hotelObj.bookings);
+
+      $('body').html(`
+        <section id="user-access-page" class="availble-rooms-page">
+          <header id="header">
+          </header>
+          <main id="main-available-rooms">
+            <nav id="filter-room-by-type">
+              <button class="room-type-button" id="residential suite">Residential Suite</button>
+              <button class="room-type-button" id="suite">Suite</button>
+              <button class="room-type-button" id="single room">Single Room</button>
+              <button class="room-type-button" id="junior suite">Junior Suite</button>
+            </nav>
+          </main>
+        </section>
+      `);
+
+      searchedUser.availableRooms.forEach(room => {
+        $('#main-available-rooms').append(`
+          <div style="border: 1px solid black;">
+            <p style="padding: 1rem;">${room.number}</p>
+            <p style="padding: 1rem;">${room.roomType}</p>
+            <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+            <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+            <button class="book-room" id=${room.number}>Book Room</button>
+          </div>
+        `);
+      });
+
+
+      $('.room-type-button').click((e) => {
+        let uniqueID = e.target.id;
+        let filteredRoomsByType = searchedUser.getRoomByType(searchedUser.availableRooms, uniqueID);
+        $('#main-available-rooms').html(``);
+        filteredRoomsByType.forEach(room => {
+          $('#main-available-rooms').append(`
+            <div style="border: 1px solid black;">
+              <p style="padding: 1rem;">${room.number}</p>
+              <p style="padding: 1rem;">${room.roomType}</p>
+              <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+              <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+              <button class="book-filtered-room" id=${room.number}>Book Room</button>
+            </div>
+          `)
+        });
+        $(".book-filtered-room").click((e) => {
+          searchedUser.postBooking(e);
+        })
+      });
+      $(".book-room").click((e) => {
+        searchedUser.postBooking(e);
+      })
+
+
+
+    });
 
     if (presentBookings.length) {
       presentBookings.forEach(presentBooking => {
@@ -154,6 +218,7 @@ const domUpdates = {
         `);
       });
       $('.delete-future-booking-button').click((e) => {
+        console.log(e.target);
         managerObj.deleteBooking(e, futureBookings);
       })
     } else {
@@ -250,56 +315,60 @@ const domUpdates = {
     $('#booking-form-submit-button').click((e) => {
       e.preventDefault(e);
       user.getAvailableRooms(hotelObj.rooms, hotelObj.bookings);
+      if (user.availableRooms.length) {
+        $('body').html(`
+          <section id="user-access-page" class="availble-rooms-page">
+            <header id="header">
+            </header>
+            <main id="main-available-rooms">
+              <nav id="filter-room-by-type">
+                <button class="room-type-button" id="residential suite">Residential Suite</button>
+                <button class="room-type-button" id="suite">Suite</button>
+                <button class="room-type-button" id="single room">Single Room</button>
+                <button class="room-type-button" id="junior suite">Junior Suite</button>
+              </nav>
+            </main>
+          </section>
+        `);
 
-      $('body').html(`
-        <section id="user-access-page" class="availble-rooms-page">
-          <header id="header">
-          </header>
-          <main id="main-available-rooms">
-            <nav id="filter-room-by-type">
-              <button class="room-type-button" id="residential suite">Residential Suite</button>
-              <button class="room-type-button" id="suite">Suite</button>
-              <button class="room-type-button" id="single room">Single Room</button>
-              <button class="room-type-button" id="junior suite">Junior Suite</button>
-            </nav>
-          </main>
-        </section>
-      `);
-
-      user.availableRooms.forEach(room => {
-        $('#main-available-rooms').append(`
-          <div style="border: 1px solid black;">
-            <p style="padding: 1rem;">${room.number}</p>
-            <p style="padding: 1rem;">${room.roomType}</p>
-            <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
-            <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-            <button class="book-room" id=${room.number}>Book Room</button>
-          </div>
-        `)
-      });
-
-      $('.room-type-button').click((e) => {
-        let uniqueID = e.target.id;
-        let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
-        $('#main-available-rooms').html(``);
-        filteredRoomsByType.forEach(room => {
+        user.availableRooms.forEach(room => {
           $('#main-available-rooms').append(`
             <div style="border: 1px solid black;">
               <p style="padding: 1rem;">${room.number}</p>
               <p style="padding: 1rem;">${room.roomType}</p>
               <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
               <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
-              <button class="book-filtered-room" id=${room.number}>Book Room</button>
+              <button class="book-room" id=${room.number}>Book Room</button>
             </div>
           `)
         });
-        $(".book-filtered-room").click((e) => {
+
+        $('.room-type-button').click((e) => {
+          let uniqueID = e.target.id;
+          let filteredRoomsByType = user.getRoomByType(user.availableRooms, uniqueID);
+          $('#main-available-rooms').html(``);
+          filteredRoomsByType.forEach(room => {
+            $('#main-available-rooms').append(`
+              <div style="border: 1px solid black;">
+                <p style="padding: 1rem;">${room.number}</p>
+                <p style="padding: 1rem;">${room.roomType}</p>
+                <p style="padding: 1rem;">${room.numBeds} ${room.bedSize}</p>
+                <p style="padding: 1rem;">${room.costPerNight.toLocaleString("en-US", {style: "currency", currency: "USD"})}</p>
+                <button class="book-filtered-room" id=${room.number}>Book Room</button>
+              </div>
+            `)
+          });
+          $(".book-filtered-room").click((e) => {
+            user.postBooking(e);
+          })
+        });
+        $(".book-room").click((e) => {
           user.postBooking(e);
         })
-      });
-      $(".book-room").click((e) => {
-        user.postBooking(e);
-      })
+      } else {
+        window.alert('Unfortunately there are no availble reservations on the selected date')
+      }
+
     });
   },
 

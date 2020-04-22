@@ -54,7 +54,7 @@ class Manager extends Customer {
   };
 
   deleteBooking(e, futureBookings) {
-    let foundBooking = futureBookings.find(booking => parseInt(e.target.id) === booking.id);
+    let foundBooking = futureBookings.find(booking => parseInt(e.target.id) === parseInt(booking.id));
     let bookingID = foundBooking.id;
     let options =  {
       method: 'DELETE',
@@ -66,7 +66,7 @@ class Manager extends Customer {
       }),
     }
     fetchData('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', options);
-    
+
     e.target.closest('div').remove();
   };
 };
