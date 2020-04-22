@@ -43,9 +43,9 @@ class Customer {
     }, 0).toLocaleString("en-US", {style: "currency", currency: "USD"});
   };
 
-  getAvailableRooms(rooms, bookings) {    
+  getAvailableRooms(rooms, bookings) {
     let bookingDate = $('#booking-date-input').val();
-    this.bookingDate =  moment(bookingDate).format('YYYY/MM/DD');
+    this.bookingDate = moment(bookingDate).format('YYYY/MM/DD');
     rooms.forEach(room => {
       bookings.forEach(booking => {
         if (booking.roomNumber === room.number && booking.date === this.bookingDate) {
