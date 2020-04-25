@@ -12,7 +12,7 @@ The project focuses on using the fetch API to GET, POST, and DELETE room, user, 
 2. Inside of the project directory, install the project dependencies by running ```npm install``` in your terminal.
 3. run ```npm start``` in your terminal to run the server
 4. open localhost:8080 (unless your terminal says otherwise)
-5. use manager as username and overlook2019 as a password to go to manager board
+5. use manager as username and overlook2020 as a password to go to manager board
 6. use customer1 (or any other number from 1 to 50, a number is an id of user) as username and overlook2019 as a password to go to customer board
 
 ## App Screenshots
