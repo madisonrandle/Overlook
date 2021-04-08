@@ -4,10 +4,10 @@ import Hotel from './Hotel';
 import './css/main.scss';
 
 const fetchAllData = () => {
-  const urlFragment = 'https://fe-apps.herokuapp.com/api/v1/overlook/1904';
-  const usersData = fetchData(`${urlFragment}/users/users`);
-  const roomsData = fetchData(`${urlFragment}/rooms/rooms`);
-  const bookingsData = fetchData(`${urlFragment}/bookings/bookings`);
+  const urlFragment = 'http://localhost:3001/api/v1';
+  const usersData = fetchData(`${urlFragment}/customers`);
+  const roomsData = fetchData(`${urlFragment}/rooms`);
+  const bookingsData = fetchData(`${urlFragment}/bookings`);
 
   Promise.all([usersData, roomsData, bookingsData])
     .then(data => {

@@ -3,7 +3,7 @@ import domUpdates from './domUpdates';
 
 class Hotel {
   constructor(users, rooms, bookings) {
-    this.users = users.users;
+    this.users = users.customers;
     this.rooms = rooms.rooms;
     this.bookings = bookings.bookings;
   }
