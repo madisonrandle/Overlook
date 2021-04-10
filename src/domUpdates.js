@@ -21,11 +21,14 @@ const domUpdates = {
           <div>
             <button id="login-button" type="submit">login</button>
           </div>
+          <div id="login-error-container">
+          </div>
         </form>
       </section>
     `);
     $('#login-button').click((e) => {
       e.preventDefault(e);
+      $('#login-error-container').empty()
       hotel.validateUser(e);
     });
   },
@@ -382,8 +385,11 @@ const domUpdates = {
     });
   },
 
-  invalidLogin: () => {
-    console.log('username or password is incorrect');
+  invalidLogin: (missingFields) => {
+    $('#login-error-container').append(missingFields.length === 0
+      ? `<p>username or password is incorrect</p>`
+      : missingFields.map(fieldType => `<p>${fieldType} is required<p>`)
+    );
   },
 }
 

@@ -9,16 +9,28 @@ class Hotel {
   }
 
   validateUser(e) {
-    const foundUser = this.users.find(user => {
-      return $('#username-input').val() === `customer${user.id}` && $('#password-input').val() === 'overlook2020';
-    });
+    let missingRequiredFields = [];
+    const inputs = document.querySelectorAll('#login-form input');
 
-    if (foundUser) {
-      domUpdates.customerAccessPage(foundUser);
+    Array.from(inputs).forEach(input => {
+      if (input.required && !$(`#${input.id}`).val()) {
+        missingRequiredFields.push(input.name);
+      }
+    })
+
+    const currentUser = $('#username-input').val() === 'manager' && 'manager'
+      || this.users.find(user => (
+        $('#username-input').val() === `customer${user.id}`)
+      );
+
+    const userPassword = $('#password-input').val() === 'overlook2020';
+
+    if (missingRequiredFields.length === 0 && userPassword) {
+       currentUser === 'manager'
+        ? domUpdates.managerAccessPage()
+        : domUpdates.customerAccessPage(currentUser)
     } else {
-      $('#username-input').val() === 'manager' && $('#password-input').val() === 'overlook2020' ?
-        domUpdates.managerAccessPage() :
-        domUpdates.invalidLogin();
+      domUpdates.invalidLogin(missingRequiredFields)
     }
   }
 }
